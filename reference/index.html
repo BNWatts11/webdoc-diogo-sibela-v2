@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inclusive Dance Web Doc · Pre-Production Package</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1510;--stage-wash:#241D16;--stage-deep:#100C09;--penumbra:#241D16;--penumbra-2:#2C241B;
+    --bone:#ECE4D6;--ash:#9D9389;--ash-dim:#6E655E;
+    --kraft:#C4885A;--kraft-deep:#8C5E38;--breath:#A8BAB8;--breath-deep:#6E8482;
+    --line:rgba(236,228,214,0.13);--line-strong:rgba(236,228,214,0.26);
+    --serif:'Fraunces',Georgia,serif;--sans:'Atkinson Hyperlegible',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;
+    --maxw:1040px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;color:var(--bone);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    background-color:var(--ink);
+    background-image:
+      radial-gradient(125% 90% at 50% -12%, rgba(236,228,214,0.06), transparent 60%),
+      radial-gradient(70% 55% at 16% 28%, rgba(168,186,184,0.05), transparent 62%),
+      radial-gradient(72% 58% at 86% 72%, rgba(196,136,90,0.06), transparent 62%),
+      linear-gradient(176deg, var(--stage-wash) 0%, var(--ink) 42%, var(--stage-deep) 100%);
+    background-attachment:fixed;position:relative;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;
+    opacity:.055;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size:220px 220px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .mono{font-family:var(--mono);}
+  ::selection{background:var(--kraft);color:var(--ink);}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);}
+
+  header{position:relative;padding:92px 0 56px;overflow:hidden;}
+  .spot{position:absolute;inset:0;z-index:0;background:radial-gradient(90% 70% at 50% -10%,rgba(236,228,214,.11),transparent 55%),radial-gradient(50% 55% at 24% 60%,rgba(168,186,184,.10),transparent 60%),radial-gradient(50% 55% at 80% 55%,rgba(196,136,90,.12),transparent 60%);pointer-events:none;}
+  header .wrap{position:relative;z-index:1;}
+  .kicker{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:30px;}
+  .tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;border-bottom:1px solid var(--line-strong);padding:2px 1px 4px;color:var(--ash);cursor:default;}
+  .not-the-doc{font-family:var(--sans);font-size:1rem;color:var(--ash);margin:0 0 22px;max-width:60ch;}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(2.8rem,7.5vw,5.4rem);line-height:.97;letter-spacing:-.02em;margin:0 0 16px;}
+  h1 em{font-style:italic;color:var(--kraft);}
+  .sub{font-size:1.22rem;color:var(--ash);max-width:60ch;margin:0;}
+  .sub b{color:var(--bone);font-weight:700;}
+
+  section{padding:30px 0 80px;}
+  .deck{display:flex;flex-direction:column;gap:14px;margin-top:10px;}
+  a.card{
+    display:grid;grid-template-columns:64px 1fr auto;align-items:center;gap:22px;
+    border:1px solid var(--line);border-radius:6px;padding:24px 26px;text-decoration:none;color:inherit;
+    background:linear-gradient(180deg,rgba(255,255,255,.018),transparent);transition:border-color .2s,transform .2s,background .2s;
+  }
+  a.card:hover,a.card:focus-visible{border-color:var(--kraft-deep);transform:translateX(4px);background:rgba(196,136,90,.05);}
+  a.card .num{font-family:var(--serif);font-weight:300;font-size:2.4rem;line-height:1;color:var(--kraft);}
+  a.card.cool .num{color:var(--breath);}
+  a.card .nm{display:block;font-family:var(--serif);font-weight:400;font-size:1.5rem;letter-spacing:-.01em;margin:0 0 4px;}
+  a.card .ds{display:block;font-size:.95rem;color:var(--ash);margin:0;max-width:60ch;}
+  a.card .go{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash-dim);white-space:nowrap;}
+  a.card:hover .go,a.card:focus-visible .go{color:var(--kraft);}
+
+  .about{border-top:1px solid var(--line);margin-top:46px;padding-top:34px;display:grid;grid-template-columns:1fr 1fr;gap:34px;}
+  .about h3{font-family:var(--serif);font-weight:400;font-size:1.3rem;margin:0 0 8px;}
+  .about p{font-size:.96rem;color:var(--ash);margin:0 0 1em;max-width:54ch;}
+  .about b{color:var(--bone);}
+  .about .mono{font-size:11px;color:var(--ash-dim);letter-spacing:.06em;}
+
+  footer{padding:36px 0 60px;border-top:1px solid var(--line);}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:baseline;}
+  .foot-row .mono{font-size:11px;color:var(--ash-dim);letter-spacing:.1em;}
+
+  @media(max-width:760px){
+    body{font-size:16px;}
+    a.card{grid-template-columns:48px 1fr;}
+    a.card .go{display:none;}
+    .about{grid-template-columns:1fr;}
+  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{transition:none!important;}}
+  :focus-visible{outline:2px solid var(--kraft);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="spot" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="kicker">
+      <span class="eyebrow">Pre-Production Package</span>
+      <span class="tag">Inclusive Dance Web Doc</span>
+      <span class="tag">Dançando com a Diferença</span>
+    </div>
+    <p class="not-the-doc">This is the planning package for the web documentary — not the web documentary itself.</p>
+    <h1>Sibela <em>&amp;</em> Digoo</h1>
+    <p class="sub">An interactive web documentary on inclusive dance — the <b>Diogo &amp; Sibela</b> show by choreographer Tânia Carvalho, told through the dancers and the objects left on stage. Five planning documents, in order.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">The package</span>
+    <div class="deck">
+
+      <a class="card" href="01-structure-mockup.html">
+        <span class="num">01</span>
+        <span><span class="nm">Structure Mockup</span><span class="ds">How a visitor moves through the site — navigation map of all nine sections, the entry flow, and wireframes of every screen type.</span></span>
+        <span class="go">Open ↦</span>
+      </a>
+
+      <a class="card cool" href="02-mood-board.html">
+        <span class="num">02</span>
+        <span><span class="nm">Mood Board</span><span class="ds">The art direction — the boxes and the chair in charcoal and graphite, macro material studies, single-source spotlight shadows, an organic palette, and an editorial-notebook type system.</span></span>
+        <span class="go">Open ↦</span>
+      </a>
+
+      <a class="card" href="03-website-structure.html">
+        <span class="num">03</span>
+        <span><span class="nm">Website Structure</span><span class="ds">The full sitemap — every page and sub-page, following the exact nine-section structure, plus site-wide accessibility pages.</span></span>
+        <span class="go">Open ↦</span>
+      </a>
+
+      <a class="card" href="04-gather-the-content.html">
+        <span class="num">04</span>
+        <span><span class="nm">Gather the Content</span><span class="ds">The asset inventory — every video, audio, image, and text, with a status on each (have / shoot / source) and a file-naming system.</span></span>
+        <span class="go">Open ↦</span>
+      </a>
+
+      <a class="card cool" href="05-reference-sites.html">
+        <span class="num">05</span>
+        <span><span class="nm">Reference Sites</span><span class="ds">Four comparable interactive documentaries to study, each with the one mechanic worth borrowing — and what they share.</span></span>
+        <span class="go">Open ↦</span>
+      </a>
+
+      <a class="card" href="06-navigation-spine.html" style="border-style:dashed;">
+        <span class="num" style="font-size:1.7rem;">✦</span>
+        <span><span class="nm">Navigation Concept</span><span class="ds">How the nine chapters are navigated — an interactive spine of imperfect cardboard-box markers with weighted, organic motion. A front-end component for the build, not a planning deliverable.</span></span>
+        <span class="go">Open ↦</span>
+      </a>
+
+      <a class="card cool" href="07-sound-concept.html" style="border-style:dashed;">
+        <span class="num" style="font-size:1.7rem;">♪</span>
+        <span><span class="nm">Sound Concept</span><span class="ds">A sound-led interface — organic Web Audio micro-soundscapes (cardboard drag, costume rustle, breath, a wooden settle) that respond to the visitor's pace, off by default and gentle by design. A front-end component, with a working demo and implementation guide.</span></span>
+        <span class="go">Open ↦</span>
+      </a>
+
+      <a class="card" href="08-video-frame.html" style="border-style:dashed;">
+        <span class="num" style="font-size:1.6rem;">◱</span>
+        <span><span class="nm">Video Framing</span><span class="ds">Video that rejects the hard rectangle — spotlight pools, cast box-shadows, hand-cut apertures, and torn edges that dissolve into the dark stage, built with CSS masks and clip-paths. A front-end component, with the implementation guide.</span></span>
+        <span class="go">Open ↦</span>
+      </a>
+
+      <a class="card cool" href="09-final-map.html" style="border-style:dashed;">
+        <span class="num" style="font-size:1.6rem;">▦</span>
+        <span><span class="nm">The Final Map</span><span class="ds">The collaborative trace page — audience-placed boxes stack, lean, and glow into a slow-exposure projection collage with lightweight physics. No grid, no gallery. A working front-end component, with interaction logic and guide.</span></span>
+        <span class="go">Open ↦</span>
+      </a>
+
+      <a class="card" href="10-access.html" style="border-style:dashed;">
+        <span class="num" style="font-size:1.6rem;">◐</span>
+        <span><span class="nm">Accessibility as Art</span><span class="ds">Access woven into the work — a stage-console for controls, transcripts styled as raw rehearsal diaries, and high contrast re-imagined as designed alternate lighting cues that re-light the whole page. A working component, AA/AAA under the art.</span></span>
+        <span class="go">Open ↦</span>
+      </a>
+
+    </div>
+
+    <div class="about">
+      <div>
+        <h3>What this package is</h3>
+        <p>The planning behind an interactive web documentary that moves the focus <b>off the choreographer and onto the dancers</b> — Isabela and Diogo — and the scenic objects their solos leave behind: the cardboard boxes and the chair.</p>
+        <p>Each document is standalone and printable, and they cross-link through the bar at the top of every page.</p>
+      </div>
+      <div>
+        <h3>Built in</h3>
+        <p><b>Accessibility</b> runs through all of it — captions, transcripts, audio description, keyboard navigation — fitting for a project about inclusion. The visual language stays quiet and sound-led, honouring Tânia Carvalho's minimalism.</p>
+        <p class="mono">ITI / LARSyS · Dançando com a Diferença · v01</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span class="mono">SIBELA &amp; DIGOO · WEB DOC · PRE-PRODUCTION PACKAGE</span>
+    <span class="mono">5 DELIVERABLES · v01</span>
+  </div>
+</footer>
+
+</body>
+</html>

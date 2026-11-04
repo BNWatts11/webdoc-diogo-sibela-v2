@@ -1,0 +1,6 @@
+# allow crawling everything by default
+User-agent: *
+Disallow: /installation/
+
+# the installation demo is an early, webcam-only prototype linked from
+# Post-Dance — not indexed until the accessible port replaces it

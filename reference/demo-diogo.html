@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diogo · Content Demo — Sibela &amp; Digoo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1510;--stage-wash:#241D16;--stage-deep:#100C09;--penumbra:#241D16;--penumbra-2:#2C241B;
+    --bone:#ECE4D6;--ash:#9D9389;--ash-dim:#6E655E;
+    --kraft:#C4885A;--kraft-deep:#8C5E38;--breath:#A8BAB8;--breath-deep:#6E8482;
+    --line:rgba(236,228,214,0.13);--line-strong:rgba(236,228,214,0.26);
+    --serif:'Fraunces',Georgia,serif;--sans:'Atkinson Hyperlegible',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;
+    --maxw:860px;--ease-heavy:cubic-bezier(.62,.05,.2,1);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;color:var(--bone);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    background-color:var(--ink);
+    background-image:
+      radial-gradient(125% 90% at 50% -12%, rgba(236,228,214,0.06), transparent 60%),
+      radial-gradient(70% 55% at 16% 28%, rgba(168,186,184,0.05), transparent 62%),
+      radial-gradient(72% 58% at 86% 72%, rgba(196,136,90,0.06), transparent 62%),
+      linear-gradient(176deg, var(--stage-wash) 0%, var(--ink) 42%, var(--stage-deep) 100%);
+    background-attachment:fixed;position:relative;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;
+    opacity:.055;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size:220px 220px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .wide{max-width:1140px;}
+  .mono{font-family:var(--mono);}
+  ::selection{background:var(--kraft);color:var(--ink);}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);}
+
+  .pkgnav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 28px;border-bottom:1px solid var(--line);background:var(--penumbra-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;flex-wrap:wrap;}
+  .pkgnav a{color:var(--kraft);text-decoration:none;white-space:nowrap;}
+  .pkgnav a:hover,.pkgnav a:focus-visible{text-decoration:underline;}
+  .pkgnav span{color:var(--ash);}
+  .pkgnav .dim{color:var(--ash-dim);text-transform:none;letter-spacing:.02em;}
+
+  /* ===== mini chapter spine — only Home / Diogo / Isabela exist in this demo ===== */
+  .mini-spine-wrap{background:var(--penumbra);border-bottom:1px solid var(--line);padding:16px 0;}
+  .mini-spine{display:flex;gap:6px;flex-wrap:wrap;list-style:none;margin:0;padding:0;}
+  .mini-spine li{display:flex;}
+  .stop-mini{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:99px;text-decoration:none;color:var(--ash);font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;border:1px solid transparent;}
+  .stop-mini .box-mini{width:16px;height:14px;border-radius:2px;background:linear-gradient(138deg,#8A6240,#664828);flex:0 0 auto;}
+  a.stop-mini:hover,a.stop-mini:focus-visible{color:var(--bone);border-color:var(--line-strong);}
+  a.stop-mini.current{color:var(--bone);border-color:var(--kraft-deep);background:rgba(196,136,90,.08);}
+  a.stop-mini.cool .box-mini{background:linear-gradient(138deg,#6E8482,#465956);}
+  .stop-mini.inert{opacity:.4;cursor:default;}
+  .stop-mini.inert .box-mini{background:linear-gradient(138deg,#4A443D,#332F29);}
+  .mini-spine-note{margin:12px 0 0;font-size:.82rem;color:var(--ash-dim);}
+
+  header{position:relative;padding:56px 0 8px;}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(2.4rem,6vw,3.6rem);letter-spacing:-.02em;margin:0 0 26px;line-height:1;}
+  .ix{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--kraft);}
+  .poetic{font-family:var(--serif);font-style:italic;font-weight:300;font-size:1.5rem;color:var(--ash);margin:10px 0 2px;}
+
+  section{padding:0 0 48px;}
+  section + section{padding-top:8px;}
+  h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.6rem,3.4vw,2.2rem);margin:0 0 20px;}
+
+  /* ===== content-slot convention (shared across all three demo files) ===== */
+  .tag-shoot,.tag-source,.tag-have{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;border-radius:99px;padding:3px 10px;margin-left:9px;vertical-align:middle;white-space:nowrap;}
+  .tag-shoot{color:var(--kraft);border:1px solid var(--kraft-deep);background:rgba(196,136,90,.09);}
+  .tag-source{color:var(--breath);border:1px solid var(--breath-deep);background:rgba(168,186,184,.09);}
+  .tag-have{color:var(--ink);background:var(--bone);font-weight:700;border:1px solid var(--bone);}
+  .optional-badge{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash-dim);border:1px dashed var(--line-strong);border-radius:99px;padding:3px 9px;margin-left:9px;vertical-align:middle;}
+  .content-block{min-height:230px;border:1px dashed var(--line-strong);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;background:rgba(255,255,255,.015);padding:24px;}
+  .content-block.hero{min-height:420px;}
+  .content-block .cap{font-family:var(--mono);font-size:.94rem;color:var(--bone);letter-spacing:.01em;}
+  .content-block .play{width:52px;height:52px;border-radius:99px;background:radial-gradient(circle,rgba(236,228,214,.14),rgba(236,228,214,.04));display:flex;align-items:center;justify-content:center;}
+  .content-block .play::after{content:"";border-left:15px solid rgba(236,228,214,.6);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px;}
+
+  /* ===== real content (in hand) — solid border, filled image, distinct from a dashed placeholder gap ===== */
+  .real-figure{border:1px solid var(--kraft-deep);border-radius:8px;overflow:hidden;background:var(--stage-deep);margin:0;}
+  .real-figure img{display:block;width:100%;height:100%;object-fit:cover;}
+  .real-figure figcaption{padding:12px 16px;font-family:var(--mono);font-size:.82rem;color:var(--ash);background:rgba(0,0,0,.2);}
+  .real-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  .real-grid .real-figure{aspect-ratio:4/3;}
+  .real-grid .real-figure img{height:calc(100% - 40px);}
+  .section-label-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+  .thesis-excerpt{border-left:3px solid var(--bone);padding:18px 24px;margin:20px 0;background:rgba(255,255,255,.02);}
+  .thesis-excerpt p{font-family:var(--serif);font-style:italic;font-size:1.14rem;line-height:1.5;color:var(--bone);margin:0 0 10px;max-width:62ch;}
+  .thesis-excerpt cite{font-family:var(--mono);font-style:normal;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ash);}
+
+  /* dancer profile */
+  .profile{border:1px solid var(--line);border-radius:8px;padding:28px;background:linear-gradient(180deg,rgba(255,255,255,.018),transparent);margin-bottom:36px;}
+  .profile-grid{display:grid;grid-template-columns:minmax(160px,220px) 1fr;gap:28px;align-items:start;}
+  .profile-grid .content-block{min-height:0;aspect-ratio:3/4;}
+  .who{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--kraft);display:block;margin-bottom:10px;}
+  .quote-slot{margin-top:16px;}
+  .scene-object{display:flex;align-items:center;gap:12px;margin-top:22px;border-top:1px solid var(--line);padding-top:18px;}
+  .scene-object .tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--kraft);border:1px solid var(--kraft-deep);border-radius:99px;padding:4px 11px;}
+
+  .body-copy p{font-size:1.06rem;line-height:1.7;color:var(--ash);max-width:66ch;}
+  .body-copy p:first-child{color:var(--bone);}
+
+  .gallery{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .gallery .content-block{min-height:160px;}
+
+  footer{padding:40px 0 60px;border-top:1px solid var(--line);margin-top:20px;}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:baseline;}
+  .foot-row .mono{font-size:11px;color:var(--ash-dim);letter-spacing:.1em;}
+
+  @media(max-width:640px){
+    body{font-size:16px;}
+    .profile-grid{grid-template-columns:1fr;}
+    .profile-grid .content-block{aspect-ratio:auto;height:180px;}
+    .gallery{grid-template-columns:1fr;}
+    .real-grid{grid-template-columns:1fr;}
+  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{transition:none!important;}}
+  :focus-visible{outline:2px solid var(--kraft);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<nav class="pkgnav" aria-label="Demo navigation">
+  <a href="index.html">↤ Planning package</a>
+  <span>CONTENT DEMO · DIOGO <span class="dim">(a demo of the actual site, not a planning document)</span></span>
+  <span><a href="demo-home.html">Home ↦</a> &nbsp; <a href="demo-isabela.html">Isabela ↦</a></span>
+</nav>
+
+<div class="mini-spine-wrap">
+  <div class="wrap wide">
+    <ul class="mini-spine">
+      <li><a class="stop-mini" href="demo-home.html"><span class="box-mini" aria-hidden="true"></span>Home</a></li>
+      <li><span class="stop-mini inert" aria-disabled="true"><span class="box-mini" aria-hidden="true"></span>Inclusive Dance</span></li>
+      <li><span class="stop-mini inert" aria-disabled="true"><span class="box-mini" aria-hidden="true"></span>Summary</span></li>
+      <li><span class="stop-mini inert" aria-disabled="true"><span class="box-mini" aria-hidden="true"></span>Company</span></li>
+      <li><span class="stop-mini inert" aria-disabled="true"><span class="box-mini" aria-hidden="true"></span>Tânia Carvalho</span></li>
+      <li><a class="stop-mini current" href="demo-diogo.html" aria-current="page"><span class="box-mini" aria-hidden="true"></span>Diogo</a></li>
+      <li><a class="stop-mini cool" href="demo-isabela.html"><span class="box-mini" aria-hidden="true"></span>Isabela</a></li>
+      <li><span class="stop-mini inert" aria-disabled="true"><span class="box-mini" aria-hidden="true"></span>Process</span></li>
+      <li><span class="stop-mini inert" aria-disabled="true"><span class="box-mini" aria-hidden="true"></span>Performance</span></li>
+      <li><span class="stop-mini inert" aria-disabled="true"><span class="box-mini" aria-hidden="true"></span>Post-Dance</span></li>
+    </ul>
+    <p class="mini-spine-note">Only Home, Diogo, and Isabela are built in this content demo — the other stops are shown inert.</p>
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <span class="ix">05 / 09</span>
+    <p class="poetic">Weight, and the boxes.</p>
+    <h1>Diogo</h1>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="content-block hero">
+      <span class="play" aria-hidden="true"></span>
+      <span class="cap">[PERFORMANCE VIDEO — Diogo's solo, &ldquo;Kinetic Boxes&rdquo;]<span class="tag-shoot">To shoot</span></span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="profile">
+      <div class="profile-grid">
+        <figure class="real-figure" style="aspect-ratio:3/4;">
+          <img src="assets/rehearsal/diogo/still-1.jpg" alt="Diogo rehearsing in the studio, boxes and studio walls visible behind him" style="height:calc(100% - 40px);">
+          <figcaption>Rehearsal still<span class="tag-have">In hand</span></figcaption>
+        </figure>
+        <div>
+          <span class="who">Who is Diogo?</span>
+          <div class="quote-slot content-block" style="min-height:120px;">
+            <span class="cap">[QUOTE — Diogo, &ldquo;who I am&rdquo;]<span class="tag-source">To source</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="scene-object">
+        <span class="tag">Scenic object</span>
+        <span>Cardboard boxes — dragged, stacked, dismantled</span>
+      </div>
+    </div>
+
+    <div class="body-copy">
+      <p>Diogo narrates his own solo, first-person — the camera moves off the choreographer and onto the dancer.</p>
+      <p>His solo is built from weight, imbalance, and physical humour: cardboard boxes he drags, stacks, and dismantles across the stage, half-props and half-partners.</p>
+    </div>
+
+    <div class="thesis-excerpt">
+      <p>&ldquo;In Diogo's solo, the focus lies on weight, imbalance, physical humour, repetition, and improvisation.&rdquo;</p>
+      <cite>Bernardo Nunes · thesis draft, &ldquo;Design of Post-Performance Interactive Installations&rdquo;<span class="tag-have">In hand</span></cite>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label-row"><span class="eyebrow">Bodies in motion</span><span class="tag-have">In hand</span></div>
+    <h2>Rehearsal stills.</h2>
+    <p style="color:var(--ash);max-width:64ch;margin:0 0 24px;">Four stills from the studio, already captured — the boxes, the space, and the improvisation the solo is built from.</p>
+    <div class="real-grid">
+      <figure class="real-figure">
+        <img src="assets/rehearsal/diogo/still-1.jpg" alt="Diogo standing among boxes in the studio, hands clasped">
+        <figcaption>Rehearsal still 1<span class="tag-have">In hand</span></figcaption>
+      </figure>
+      <figure class="real-figure">
+        <img src="assets/rehearsal/diogo/still-2.jpg" alt="Diogo mid-movement in rehearsal, boxes nearby">
+        <figcaption>Rehearsal still 2<span class="tag-have">In hand</span></figcaption>
+      </figure>
+      <figure class="real-figure">
+        <img src="assets/rehearsal/diogo/still-3.jpg" alt="Diogo mid-gesture beside the box tower, arms raised">
+        <figcaption>Diogo, mid-gesture<span class="tag-have">In hand</span></figcaption>
+      </figure>
+      <figure class="real-figure">
+        <img src="assets/rehearsal/diogo/still-4.jpg" alt="Diogo mid-fall on the floor as boxes topple beside him">
+        <figcaption>Diogo, mid-fall<span class="tag-have">In hand</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label-row"><span class="eyebrow">Preparation / Process</span><span class="tag-have">In hand</span></div>
+    <h2>The storyboard.</h2>
+    <p style="color:var(--ash);max-width:64ch;margin:0 0 24px;">The four hand-drawn panels the solo was built from, already sketched.</p>
+    <div class="real-grid">
+      <figure class="real-figure">
+        <img src="assets/storyboards/diogo/panel-1.jpg" alt="Storyboard panel 1 for Diogo's solo — hand-drawn pencil sketch">
+        <figcaption>Storyboard panel 1<span class="tag-have">In hand</span></figcaption>
+      </figure>
+      <figure class="real-figure">
+        <img src="assets/storyboards/diogo/panel-2.jpg" alt="Storyboard panel 2 for Diogo's solo — hand-drawn pencil sketch">
+        <figcaption>Storyboard panel 2<span class="tag-have">In hand</span></figcaption>
+      </figure>
+      <figure class="real-figure">
+        <img src="assets/storyboards/diogo/panel-3.jpg" alt="Storyboard panel 3 for Diogo's solo — hand-drawn pencil sketch">
+        <figcaption>Storyboard panel 3<span class="tag-have">In hand</span></figcaption>
+      </figure>
+      <figure class="real-figure">
+        <img src="assets/storyboards/diogo/panel-4.jpg" alt="Storyboard panel 4 for Diogo's solo — hand-drawn pencil sketch">
+        <figcaption>Storyboard panel 4<span class="tag-have">In hand</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Before the first step</span>
+    <h2>The rehearsal room.</h2>
+    <div class="content-block">
+      <span class="cap">[ARCHIVE CLIP — rehearsal-room footage, Diogo building the box stack]<span class="tag-shoot">To shoot</span></span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Optional</span>
+    <h2>Interview<span class="optional-badge">optional</span></h2>
+    <div class="content-block">
+      <span class="cap">[ARCHIVE CLIP — interview with Diogo]<span class="tag-source">To source</span></span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label-row"><span class="eyebrow">Interaction — post-dance</span><span class="tag-have">In hand</span></div>
+    <h2>Kinetic Boxes — the post-show installation.</h2>
+    <p style="color:var(--ash);max-width:64ch;margin:0 0 24px;">The storyboard for the camera-based installation built from Diogo's solo, where the audience's own movement becomes the interaction.</p>
+    <figure class="real-figure">
+      <img src="assets/interaction/mediapipe-1.jpg" alt="Storyboard: Kinetic Boxes post-show MediaPipe installation, six panels">
+      <figcaption>Kinetic Boxes storyboard, 6 panels<span class="tag-have">In hand</span></figcaption>
+    </figure>
+    <div class="thesis-excerpt">
+      <p>&ldquo;Projected digital boxes respond to bodily movement by shifting, colliding, reorganising, or dispersing&hellip; emphasising qualities such as weight, resistance, and imbalance, translating choreographic ideas into observable system behaviour without replicating specific movements.&rdquo;</p>
+      <cite>Bernardo Nunes · thesis draft, on the projection-based installation<span class="tag-have">In hand</span></cite>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Accessibility</span>
+    <h2>Every voice, in text.</h2>
+    <div class="content-block">
+      <span class="cap">[VIDEO — captioned + audio-described excerpt of Diogo's solo]<span class="tag-shoot">To shoot</span></span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Object studies</span>
+    <h2>The material, up close.</h2>
+    <div class="gallery">
+      <div class="content-block">
+        <span class="cap">[PHOTO — box edge, crushed corrugation]<span class="tag-shoot">To shoot</span></span>
+      </div>
+      <div class="content-block">
+        <span class="cap">[PHOTO — packing tape, half-peeled]<span class="tag-shoot">To shoot</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span class="mono">SIBELA &amp; DIGOO · WEB DOC · CONTENT DEMO — DIOGO</span>
+    <span class="mono">ITI / LARSyS · Dançando com a Diferença</span>
+  </div>
+</footer>
+
+</body>
+</html>

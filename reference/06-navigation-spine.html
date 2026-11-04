@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Doc · Navigation Concept — The Spine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1510;--stage-wash:#241D16;--stage-deep:#100C09;--penumbra:#241D16;--penumbra-2:#2C241B;
+    --bone:#ECE4D6;--ash:#9D9389;--ash-dim:#6E655E;
+    --kraft:#C4885A;--kraft-deep:#8C5E38;--breath:#A8BAB8;--breath-deep:#6E8482;
+    --line:rgba(236,228,214,0.13);--line-strong:rgba(236,228,214,0.26);
+    --serif:'Fraunces',Georgia,serif;--sans:'Atkinson Hyperlegible',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;
+    --maxw:1140px;
+    /* weighted, organic easings — slow to gather, slow to settle, never snappy */
+    --ease-heavy:cubic-bezier(.62,.05,.2,1);
+    --ease-settle:cubic-bezier(.36,.02,.16,1);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;color:var(--bone);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    background-color:var(--ink);
+    background-image:
+      radial-gradient(125% 90% at 50% -12%, rgba(236,228,214,0.06), transparent 60%),
+      radial-gradient(70% 55% at 16% 28%, rgba(168,186,184,0.05), transparent 62%),
+      radial-gradient(72% 58% at 86% 72%, rgba(196,136,90,0.06), transparent 62%),
+      linear-gradient(176deg, var(--stage-wash) 0%, var(--ink) 42%, var(--stage-deep) 100%);
+    background-attachment:fixed;position:relative;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;
+    opacity:.055;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size:220px 220px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .mono{font-family:var(--mono);}
+  ::selection{background:var(--kraft);color:var(--ink);}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);}
+
+  /* package nav */
+  .pkgnav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 28px;border-bottom:1px solid var(--line);background:var(--penumbra-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;flex-wrap:wrap;}
+  .pkgnav a{color:var(--kraft);text-decoration:none;white-space:nowrap;}
+  .pkgnav span{color:var(--ash);}
+
+  header{position:relative;padding:64px 0 30px;overflow:hidden;border-bottom:1px solid var(--line);}
+  .spot{position:absolute;inset:0;z-index:0;background:radial-gradient(70% 60% at 30% 0%,rgba(196,136,90,.12),transparent 60%);pointer-events:none;}
+  header .wrap{position:relative;z-index:1;}
+  .delv{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--kraft);border:1px solid var(--kraft-deep);border-radius:99px;padding:5px 13px;margin-bottom:24px;}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(2.4rem,6.4vw,4.4rem);line-height:1;letter-spacing:-.02em;margin:0 0 14px;}
+  h1 em{font-style:italic;}
+  .sub{font-size:1.16rem;color:var(--ash);max-width:60ch;margin:0;}
+  .sub b{color:var(--bone);font-weight:700;}
+
+  section{padding:54px 0;}
+
+  /* ===== the spine ===== */
+  .spine-stage{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:54px;align-items:start;margin-top:18px;}
+
+  .spine{position:relative;}
+  .spine ol{list-style:none;margin:0;padding:0;position:relative;z-index:1;}
+  /* the connecting thread — soft, slightly blurred, hand-laid rather than crisp */
+  .spine ol::before{
+    content:"";position:absolute;left:25px;top:26px;bottom:26px;width:2px;z-index:0;
+    background:linear-gradient(180deg,transparent,var(--line-strong) 7%,var(--line-strong) 93%,transparent);
+    filter:blur(.4px);opacity:.8;
+  }
+
+  .stop{position:relative;z-index:1;}
+  .marker{
+    display:flex;align-items:center;gap:20px;width:100%;
+    background:none;border:0;padding:11px 6px;cursor:pointer;text-align:left;color:inherit;font-family:inherit;
+    border-radius:6px;
+  }
+  .marker:focus-visible{outline:2px solid var(--kraft);outline-offset:3px;}
+
+  /* the cardboard box marker — irregular, asymmetrical, never a perfect circle */
+  .box{
+    position:relative;flex:0 0 auto;width:40px;height:35px;transform-origin:52% 60%;
+    background:
+      repeating-linear-gradient(13deg, rgba(0,0,0,.14) 0 2px, transparent 2px 7px),
+      linear-gradient(138deg,#8A6240,#664828);
+    filter:drop-shadow(0 2px 3px rgba(0,0,0,.45));
+    transition:transform .85s var(--ease-heavy), filter .7s var(--ease-settle), background .65s ease;
+  }
+  /* nine subtly different flattened-box silhouettes */
+  .stop:nth-child(1) .box{clip-path:polygon(6% 11%,92% 4%,96% 90%,10% 95%);}
+  .stop:nth-child(2) .box{clip-path:polygon(4% 7%,90% 10%,95% 88%,8% 96%);}
+  .stop:nth-child(3) .box{clip-path:polygon(9% 8%,95% 5%,89% 93%,5% 87%);}
+  .stop:nth-child(4) .box{clip-path:polygon(5% 13%,87% 6%,97% 85%,13% 93%);}
+  .stop:nth-child(5) .box{clip-path:polygon(11% 5%,93% 13%,87% 91%,6% 85%);}
+  .stop:nth-child(6) .box{clip-path:polygon(6% 9%,90% 3%,96% 92%,9% 90%);}
+  .stop:nth-child(7) .box{clip-path:polygon(4% 11%,94% 7%,88% 95%,12% 87%);}
+  .stop:nth-child(8) .box{clip-path:polygon(10% 6%,96% 11%,90% 87%,5% 93%);}
+  .stop:nth-child(9) .box{clip-path:polygon(7% 13%,88% 5%,97% 89%,8% 96%);}
+
+  /* Isabela's stop — the cool pole (chair / breath), not cardboard */
+  .stop:nth-child(6) .box{background:repeating-linear-gradient(13deg,rgba(0,0,0,.12) 0 2px,transparent 2px 7px),linear-gradient(138deg,#6E8482,#465956);}
+
+  /* hover & focus — the box leans and settles under its own weight */
+  .marker:hover .box,.marker:focus-visible .box{
+    transform:translateX(5px) rotate(-2.6deg) skewX(-2.2deg) scale(1.07);
+    filter:drop-shadow(0 8px 12px rgba(0,0,0,.55));
+    background:repeating-linear-gradient(13deg,rgba(0,0,0,.12) 0 2px,transparent 2px 7px),linear-gradient(138deg,#C4885A,#9A6539);
+  }
+  .stop:nth-child(6) .marker:hover .box,.stop:nth-child(6) .marker:focus-visible .box{
+    background:repeating-linear-gradient(13deg,rgba(0,0,0,.1) 0 2px,transparent 2px 7px),linear-gradient(138deg,#A8BAB8,#7E938F);
+  }
+  /* active / current — fully set down, weight forward */
+  .marker[aria-current="true"] .box{
+    transform:translateX(9px) rotate(1.8deg) scale(1.14);
+    filter:drop-shadow(0 10px 16px rgba(0,0,0,.6));
+    background:repeating-linear-gradient(13deg,rgba(0,0,0,.1) 0 2px,transparent 2px 7px),linear-gradient(138deg,#D2965F,#A66B3C);
+  }
+  .stop:nth-child(6) .marker[aria-current="true"] .box{
+    background:repeating-linear-gradient(13deg,rgba(0,0,0,.1) 0 2px,transparent 2px 7px),linear-gradient(138deg,#BCCAC8,#8AA09C);
+  }
+
+  .label{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .label .t{font-family:var(--serif);font-weight:400;font-size:1.16rem;letter-spacing:-.01em;color:var(--ash);transition:color .6s var(--ease-settle);}
+  .label .g{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash-dim);transition:color .6s var(--ease-settle);}
+  .marker:hover .label .t,.marker:focus-visible .label .t,.marker[aria-current="true"] .label .t{color:var(--bone);}
+  .marker[aria-current="true"] .label .g{color:var(--kraft);}
+  .stop:nth-child(6) .marker[aria-current="true"] .label .g{color:var(--breath);}
+
+  /* ===== reader panel ===== */
+  .reader{position:sticky;top:30px;border:1px solid var(--line);border-radius:8px;padding:34px 36px;min-height:300px;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);}
+  .chapter{display:none;}
+  .chapter.on{display:block;animation:settle .85s var(--ease-heavy);}
+  @keyframes settle{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+  .chapter .ix{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--kraft);}
+  .chapter.cool .ix{color:var(--breath);}
+  .chapter .poetic{font-family:var(--serif);font-style:italic;font-weight:300;font-size:1.5rem;color:var(--ash);margin:14px 0 2px;}
+  .chapter h2{font-family:var(--serif);font-weight:400;font-size:2.1rem;letter-spacing:-.01em;margin:0 0 14px;line-height:1.05;}
+  .chapter p{font-size:1.02rem;color:var(--ash);margin:0 0 20px;max-width:52ch;}
+  .chapter .path{font-family:var(--mono);font-size:11px;color:var(--ash-dim);letter-spacing:.04em;border-top:1px solid var(--line);padding-top:16px;}
+  .hint{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ash-dim);margin-top:22px;}
+
+  /* motion note */
+  .motion{border-top:1px solid var(--line);margin-top:8px;}
+  .motion-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px;}
+  .mcard{border:1px solid var(--line);border-radius:5px;padding:22px;}
+  .mcard .n{font-family:var(--mono);font-size:11px;color:var(--kraft);letter-spacing:.12em;}
+  .mcard h3{font-family:var(--serif);font-weight:400;font-size:1.18rem;margin:8px 0 5px;}
+  .mcard p{margin:0;font-size:.92rem;color:var(--ash);}
+
+  footer{padding:40px 0 60px;border-top:1px solid var(--line);}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:baseline;}
+  .foot-row .mono{font-size:11px;color:var(--ash-dim);letter-spacing:.1em;}
+
+  @media(max-width:820px){
+    body{font-size:16px;}
+    .spine-stage{grid-template-columns:1fr;gap:30px;}
+    .reader{position:relative;top:0;}
+    .motion-grid{grid-template-columns:1fr;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none!important;animation:none!important;}
+    .marker:hover .box,.marker[aria-current="true"] .box{transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="pkgnav" aria-label="Package navigation">
+  <a href="index.html">↤ All deliverables</a>
+  <span>NAVIGATION CONCEPT · COMPONENT</span>
+  <a href="03-website-structure.html">Website Structure ↦</a>
+</nav>
+
+<header>
+  <div class="spot" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="delv">Component · Navigation Concept</span>
+    <h1>The spine —<br>nine stops, nine <em>boxes</em>.</h1>
+    <p class="sub">The chapter markers aren't slider dots. Each is a flattened cardboard box — slightly imperfect, asymmetrical, no two alike — that <b>leans and settles under its own weight</b> when you reach for it. Hover or focus a box; use arrow keys to move along the thread.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="spine-stage">
+
+      <nav class="spine" aria-label="Chapters">
+        <ol>
+          <li class="stop"><button class="marker" type="button" aria-current="false"><span class="box" aria-hidden="true"></span><span class="label"><span class="t">Inclusive Dance</span><span class="g">01 · the opening</span></span></button></li>
+          <li class="stop"><button class="marker" type="button" aria-current="false"><span class="box" aria-hidden="true"></span><span class="label"><span class="t">Inclusive Dance — Summary</span><span class="g">02 · in a breath</span></span></button></li>
+          <li class="stop"><button class="marker" type="button" aria-current="false"><span class="box" aria-hidden="true"></span><span class="label"><span class="t">Dançando com a Diferença</span><span class="g">03 · the people</span></span></button></li>
+          <li class="stop"><button class="marker" type="button" aria-current="false"><span class="box" aria-hidden="true"></span><span class="label"><span class="t">Tânia Carvalho</span><span class="g">04 · the arranging hand</span></span></button></li>
+          <li class="stop"><button class="marker" type="button" aria-current="false"><span class="box" aria-hidden="true"></span><span class="label"><span class="t">Diogo</span><span class="g">05 · weight &amp; boxes</span></span></button></li>
+          <li class="stop"><button class="marker" type="button" aria-current="false"><span class="box" aria-hidden="true"></span><span class="label"><span class="t">Isabela</span><span class="g">06 · breath &amp; the chair</span></span></button></li>
+          <li class="stop"><button class="marker" type="button" aria-current="false"><span class="box" aria-hidden="true"></span><span class="label"><span class="t">Preparation / Process</span><span class="g">07 · before the first step</span></span></button></li>
+          <li class="stop"><button class="marker" type="button" aria-current="false"><span class="box" aria-hidden="true"></span><span class="label"><span class="t">Performance</span><span class="g">08 · presence, in time</span></span></button></li>
+          <li class="stop"><button class="marker" type="button" aria-current="false"><span class="box" aria-hidden="true"></span><span class="label"><span class="t">Post-Dance</span><span class="g">09 · what remains</span></span></button></li>
+        </ol>
+      </nav>
+
+      <div class="reader" aria-live="polite">
+        <article class="chapter"><span class="ix">01 / 09</span><p class="poetic">Where the room first speaks.</p><h2>Inclusive Dance</h2><p>Opening statement — bodily difference as artistic language, not a problem to fix. It sets the register for everything that follows.</p><div class="path">/inclusive-dance</div></article>
+        <article class="chapter"><span class="ix">02 / 09</span><p class="poetic">In a breath.</p><h2>Inclusive Dance — Summary</h2><p>The tight conceptual summary, read in under a minute before the visitor meets the people.</p><div class="path">/inclusive-dance/summary</div></article>
+        <article class="chapter"><span class="ix">03 / 09</span><p class="poetic">The people behind the room.</p><h2>Dançando com a Diferença</h2><p>The company — its mission, the “Invisibility Cycle”, and the hands that keep the room running.</p><div class="path">/company</div></article>
+        <article class="chapter"><span class="ix">04 / 09</span><p class="poetic">The hand that arranges.</p><h2>Tânia Carvalho</h2><p>Choreographer — method, multidisciplinarity, and the two conceptual texts. Context, not the spine; the dancers carry the story.</p><div class="path">/tania-carvalho</div></article>
+        <article class="chapter"><span class="ix">05 / 09</span><p class="poetic">Weight, and the boxes.</p><h2>Diogo</h2><p>Who he is, the solo, and the cardboard boxes — weight, imbalance, physical humour, improvisation.</p><div class="path">/diogo</div></article>
+        <article class="chapter cool"><span class="ix">06 / 09</span><p class="poetic">Breath, and the chair.</p><h2>Isabela</h2><p>Who she is, the solo, and the chair at its centre — interiority, slowness, suspension.</p><div class="path">/isabela</div></article>
+        <article class="chapter"><span class="ix">07 / 09</span><p class="poetic">Before the first step.</p><h2>Preparation / Process</h2><p>How the two solos were built — the rehearsal room and both storyboards, shown from more than the choreographer's view.</p><div class="path">/process</div></article>
+        <article class="chapter"><span class="ix">08 / 09</span><p class="poetic">Presence, in time.</p><h2>Performance</h2><p>The two-act show on an interactive timeline — audio, video, notes, and the movement-quality lanes.</p><div class="path">/performance</div></article>
+        <article class="chapter"><span class="ix">09 / 09</span><p class="poetic">What remains on stage.</p><h2>Post-Dance</h2><p>What the dancing leaves behind: Diogo's boxes, Isabela's chair, and the audience's own compositions.</p><div class="path">/post-dance</div></article>
+        <p class="hint">↑ ↓ move along the thread · enter to set the chapter</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="motion">
+  <div class="wrap">
+    <span class="eyebrow">On the motion</span>
+    <div class="motion-grid">
+      <div class="mcard"><span class="n">01</span><h3>Weighted, not snappy</h3><p>Transitions run long (~0.85s) on a slow-to-gather, slow-to-settle curve, so a box feels like it has mass rather than a UI state flipping.</p></div>
+      <div class="mcard"><span class="n">02</span><h3>It leans, it doesn't bounce</h3><p>On hover the box tilts and skews a little — like cardboard taking weight — then settles. No spring, no overshoot, nothing that reads as computed.</p></div>
+      <div class="mcard"><span class="n">03</span><h3>Imperfect by design</h3><p>Each marker is a hand-cut polygon, no two identical, with a faint corrugation grain. The thread is soft-blurred, not a crisp 1-pixel line.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span class="mono">SIBELA &amp; DIGOO · WEB DOC · NAVIGATION CONCEPT</span>
+    <span class="mono">ITI / LARSyS · Dançando com a Diferença</span>
+  </div>
+</footer>
+
+<script>
+  const markers=[...document.querySelectorAll('.marker')];
+  const panels=[...document.querySelectorAll('.chapter')];
+  function activate(i){
+    markers.forEach((m,j)=>m.setAttribute('aria-current', j===i?'true':'false'));
+    panels.forEach((p,j)=>p.classList.toggle('on', j===i));
+  }
+  markers.forEach((m,i)=>{
+    m.addEventListener('click',()=>{activate(i);});
+    m.addEventListener('focus',()=>{activate(i);});
+    m.addEventListener('keydown',e=>{
+      if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();markers[Math.min(i+1,markers.length-1)].focus();}
+      if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();markers[Math.max(i-1,0)].focus();}
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();activate(i);}
+    });
+  });
+  activate(0);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Doc · Video Framing — Spotlight &amp; Shadow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1510;--stage-wash:#241D16;--stage-deep:#100C09;--penumbra:#241D16;--penumbra-2:#2C241B;
+    --bone:#ECE4D6;--ash:#9D9389;--ash-dim:#6E655E;
+    --kraft:#C4885A;--kraft-deep:#8C5E38;--breath:#A8BAB8;--breath-deep:#6E8482;
+    --line:rgba(236,228,214,0.13);--line-strong:rgba(236,228,214,0.26);
+    --serif:'Fraunces',Georgia,serif;--sans:'Atkinson Hyperlegible',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;--hand:'Caveat',cursive;
+    --maxw:1140px;--ease:cubic-bezier(.62,.05,.2,1);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;color:var(--bone);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    background-color:var(--ink);
+    background-image:
+      radial-gradient(125% 90% at 50% -12%, rgba(236,228,214,0.06), transparent 60%),
+      radial-gradient(70% 55% at 16% 28%, rgba(168,186,184,0.05), transparent 62%),
+      radial-gradient(72% 58% at 86% 72%, rgba(196,136,90,0.06), transparent 62%),
+      linear-gradient(176deg, var(--stage-wash) 0%, var(--ink) 42%, var(--stage-deep) 100%);
+    background-attachment:fixed;position:relative;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.055;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size:220px 220px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .mono{font-family:var(--mono);}
+  ::selection{background:var(--kraft);color:var(--ink);}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);}
+
+  .pkgnav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 28px;border-bottom:1px solid var(--line);background:var(--penumbra-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;flex-wrap:wrap;}
+  .pkgnav a{color:var(--kraft);text-decoration:none;white-space:nowrap;}
+  .pkgnav span{color:var(--ash);}
+
+  header{position:relative;padding:60px 0 30px;overflow:hidden;}
+  header .wrap{position:relative;z-index:1;}
+  .delv{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--kraft);border:1px solid var(--kraft-deep);border-radius:99px;padding:5px 13px;margin-bottom:24px;}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(2.4rem,6.4vw,4.6rem);line-height:1;letter-spacing:-.02em;margin:0 0 14px;}
+  h1 em{font-style:italic;}
+  .sub{font-size:1.16rem;color:var(--ash);max-width:62ch;margin:0;}
+  .sub b{color:var(--bone);font-weight:700;}
+
+  section{padding:50px 0;border-bottom:1px solid var(--line);}
+  h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.7rem,3.6vw,2.5rem);line-height:1.05;margin:0 0 8px;letter-spacing:-.01em;}
+  .lede{font-size:1.1rem;color:var(--ash);max-width:64ch;margin:0 0 8px;}
+
+  /* ====== footage stand-in (reads as performance video) ====== */
+  .footage{position:absolute;inset:0;overflow:hidden;
+    background:
+      radial-gradient(42% 55% at 40% 40%, rgba(214,152,95,.45), transparent 62%),
+      radial-gradient(60% 70% at 72% 74%, rgba(120,80,50,.4), transparent 66%),
+      linear-gradient(158deg,#2c2016,#120d09 78%);
+  }
+  .footage .glow{position:absolute;inset:-25%;background:radial-gradient(30% 38% at 42% 42%,rgba(236,228,214,.22),transparent 62%);animation:drift 15s var(--ease) infinite alternate;}
+  .footage svg{position:absolute;left:50%;bottom:-4%;transform:translateX(-50%);height:88%;animation:sway 7.5s ease-in-out infinite alternate;transform-origin:50% 100%;}
+  @keyframes drift{from{transform:translate(-5%,-3%);}to{transform:translate(9%,6%);}}
+  @keyframes sway{from{transform:translateX(-50%) rotate(-2deg);}to{transform:translateX(-46%) rotate(2.4deg) translateY(-2%);}}
+
+  .play{position:absolute;left:50%;top:50%;width:64px;height:64px;transform:translate(-50%,-50%);z-index:4;border-radius:99px;
+    background:radial-gradient(circle,rgba(20,17,16,.5),rgba(20,17,16,.12));backdrop-filter:blur(1px);display:flex;align-items:center;justify-content:center;opacity:.85;}
+  .play::after{content:"";border-left:16px solid rgba(236,228,214,.85);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:5px;}
+
+  /* ====== HERO — full-bleed spotlight pool ====== */
+  .hero-video{position:relative;height:440px;margin-top:10px;}
+  .hero-video .footage{
+    -webkit-mask-image:radial-gradient(72% 92% at 50% 42%, #000 40%, transparent 86%), linear-gradient(180deg, transparent, #000 14%, #000 78%, transparent);
+    mask-image:radial-gradient(72% 92% at 50% 42%, #000 40%, transparent 86%), linear-gradient(180deg, transparent, #000 14%, #000 78%, transparent);
+    -webkit-mask-composite:source-in;mask-composite:intersect;
+  }
+  .hero-video .breathe{position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 78% at 50% 44%,transparent 46%,var(--ink) 88%);animation:breathe 7s ease-in-out infinite;}
+  @keyframes breathe{0%,100%{opacity:.78;transform:scale(1.02);}50%{opacity:1;transform:scale(1);}}
+  .hero-cap{font-family:var(--hand);font-size:1.5rem;color:var(--kraft);transform:rotate(-2deg);margin-top:14px;display:inline-block;}
+
+  /* ====== demo grid ====== */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px;}
+  .vid{position:relative;height:280px;}
+  .vid .footage{background:radial-gradient(45% 58% at 42% 42%, rgba(214,152,95,.4), transparent 62%),radial-gradient(60% 70% at 70% 74%, rgba(120,80,50,.38), transparent 66%),linear-gradient(158deg,#2a1f16,#120d09 80%);}
+  .meta{position:absolute;left:0;right:0;bottom:-2px;z-index:6;display:flex;justify-content:space-between;align-items:flex-end;padding:0 4px;}
+  .meta .t{font-family:var(--serif);font-weight:400;font-size:1.16rem;}
+  .meta .tech{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--kraft);}
+  .vid p.note{position:absolute;bottom:-58px;left:0;font-size:.86rem;color:var(--ash);margin:0;max-width:90%;}
+  .frame-wrap{position:absolute;inset:0;}
+
+  /* (1) spotlight pool — radial mask, dissolves to stage */
+  .t-spot .footage{
+    -webkit-mask-image:radial-gradient(56% 70% at 50% 46%, #000 36%, transparent 82%);
+    mask-image:radial-gradient(56% 70% at 50% 46%, #000 36%, transparent 82%);
+  }
+  .t-spot .breathe{position:absolute;inset:0;pointer-events:none;background:radial-gradient(52% 64% at 50% 46%,transparent 44%,var(--ink) 86%);animation:breathe 7s ease-in-out infinite;}
+
+  /* (2) cast by boxes — soft box-shadows fall across the frame */
+  .t-cast .footage{-webkit-mask-image:radial-gradient(80% 96% at 50% 50%,#000 60%,transparent 100%);mask-image:radial-gradient(80% 96% at 50% 50%,#000 60%,transparent 100%);}
+  .t-cast .shadow{position:absolute;inset:0;pointer-events:none;z-index:3;}
+  .t-cast .shadow b{position:absolute;display:block;background:linear-gradient(180deg,rgba(8,6,4,.92),rgba(8,6,4,.2));filter:blur(7px);}
+  .t-cast .shadow .s1{top:-8%;left:-6%;width:46%;height:62%;clip-path:polygon(0 0,86% 6%,72% 96%,0 84%);transform:rotate(-3deg);}
+  .t-cast .shadow .s2{bottom:-10%;right:-8%;width:52%;height:58%;clip-path:polygon(20% 8%,100% 0,100% 100%,4% 92%);transform:rotate(4deg);opacity:.9;}
+  .t-cast .shadow .s3{bottom:-6%;left:30%;width:26%;height:40%;clip-path:polygon(0 18%,100% 0,86% 100%,8% 88%);opacity:.7;}
+
+  /* (3) hand-cut aperture — irregular clip-path + feather */
+  .t-aperture .frame-wrap{clip-path:polygon(3% 9%, 92% 3%, 99% 70%, 96% 94%, 8% 97%, 1% 40%);}
+  .t-aperture .footage{
+    -webkit-mask-image:radial-gradient(78% 86% at 50% 50%, #000 58%, transparent 99%);
+    mask-image:radial-gradient(78% 86% at 50% 50%, #000 58%, transparent 99%);
+  }
+  .t-aperture .frame-wrap::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 60px 24px rgba(16,12,9,.9);pointer-events:none;z-index:3;}
+
+  /* (4) torn dissolve — organic SVG turbulence mask */
+  .t-torn .footage{
+    -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='380'%3E%3Cfilter id='torn' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.016' numOctaves='2' seed='6' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='48' xChannelSelector='R' yChannelSelector='G'/%3E%3CfeGaussianBlur stdDeviation='7'/%3E%3C/filter%3E%3Cellipse cx='300' cy='190' rx='250' ry='150' fill='%23fff' filter='url(%23torn)'/%3E%3C/svg%3E");
+    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='380'%3E%3Cfilter id='torn' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.016' numOctaves='2' seed='6' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='48' xChannelSelector='R' yChannelSelector='G'/%3E%3CfeGaussianBlur stdDeviation='7'/%3E%3C/filter%3E%3Cellipse cx='300' cy='190' rx='250' ry='150' fill='%23fff' filter='url(%23torn)'/%3E%3C/svg%3E");
+    -webkit-mask-size:cover;mask-size:cover;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  }
+
+  /* ====== code ====== */
+  pre{margin:26px 0 0;background:#0F0C09;border:1px solid var(--line);border-radius:8px;padding:22px 24px;overflow-x:auto;}
+  code{font-family:var(--mono);font-size:12.5px;line-height:1.85;color:#D9CFBE;}
+  code .c{color:#7E7468;font-style:italic;}
+  code .k{color:#C4885A;}
+  code .f{color:#A8BAB8;}
+
+  .notes{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:32px;}
+  .ncard{border:1px solid var(--line);border-radius:6px;padding:22px;}
+  .ncard .ix{font-family:var(--mono);font-size:11px;color:var(--breath);letter-spacing:.1em;}
+  .ncard h3{font-family:var(--serif);font-weight:400;font-size:1.14rem;margin:7px 0 5px;}
+  .ncard p{margin:0;font-size:.92rem;color:var(--ash);}
+
+  footer{padding:40px 0 60px;}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:baseline;}
+  .foot-row .mono{font-size:11px;color:var(--ash-dim);letter-spacing:.1em;}
+
+  @media(max-width:860px){body{font-size:16px;}.grid,.notes{grid-template-columns:1fr;}.grid{gap:90px;}}
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none!important;}
+    .glow,.footage svg,.breathe{animation:none!important;}
+  }
+  :focus-visible{outline:2px solid var(--kraft);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<nav class="pkgnav" aria-label="Package navigation">
+  <a href="index.html">↤ All deliverables</a>
+  <span>VIDEO FRAMING · COMPONENT</span>
+  <a href="07-sound-concept.html">Sound Concept ↦</a>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="delv">Component · Video Framing</span>
+    <h1>No rectangles.<br>The footage lives in the <em>light</em>.</h1>
+    <p class="sub">A video player with hard corners would sit on top of this web doc like a window cut into the wall. Instead, the footage is <b>a pool of spotlight on a dark stage</b> — its edges dissolve into the room, broken by the soft shadows of boxes, fading where the light falls off. Built with CSS masks, clip-paths, and procedural vignettes; no images, no hard frame.</p>
+  </div>
+</header>
+
+<!-- HERO -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">A · The signature treatment</span>
+    <h2>A spotlight pool, breathing.</h2>
+    <div class="hero-video">
+      <div class="footage"><span class="glow"></span>
+        <svg viewBox="0 0 120 200" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><g fill="#0b0806" opacity=".62"><circle cx="60" cy="40" r="13"/><path d="M60 54 C50 58 46 80 50 106 L47 152 54 152 58 112 62 112 66 152 73 152 70 106 C74 80 70 58 60 54 Z"/></g><g stroke="#0b0806" stroke-width="7" stroke-linecap="round" opacity=".62"><path d="M53 70 L28 50"/><path d="M67 70 L95 86"/></g></svg>
+      </div>
+      <div class="breathe" aria-hidden="true"></div>
+      <div class="play" aria-hidden="true"></div>
+    </div>
+    <span class="hero-cap">the edges aren't cropped — they fall off into the dark</span>
+  </div>
+</section>
+
+<!-- GRID OF TECHNIQUES -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">B · Four ways to lose the rectangle</span>
+    <h2>Each frame, a different falloff.</h2>
+
+    <div class="grid">
+
+      <div class="vid t-spot">
+        <div class="frame-wrap"><div class="footage"><span class="glow"></span></div></div>
+        <div class="breathe" aria-hidden="true"></div>
+        <div class="meta"><span class="t">Spotlight pool</span><span class="tech">radial mask</span></div>
+        <p class="note">A radial mask fades the footage to nothing at the edges — a soft oval of light, no border.</p>
+      </div>
+
+      <div class="vid t-cast">
+        <div class="frame-wrap"><div class="footage"><span class="glow"></span></div>
+          <div class="shadow" aria-hidden="true"><b class="s1"></b><b class="s2"></b><b class="s3"></b></div>
+        </div>
+        <div class="meta"><span class="t">Cast by boxes</span><span class="tech">clip-path shadows</span></div>
+        <p class="note">Soft box-shaped shadows fall across the frame from off-screen, breaking the edge as scenic props would.</p>
+      </div>
+
+      <div class="vid t-aperture">
+        <div class="frame-wrap"><div class="footage"><span class="glow"></span></div></div>
+        <div class="meta"><span class="t">Hand-cut aperture</span><span class="tech">irregular clip-path</span></div>
+        <p class="note">A slightly off, asymmetric clip-path — a gap between flats — with an inset vignette feathering the cut.</p>
+      </div>
+
+      <div class="vid t-torn">
+        <div class="frame-wrap"><div class="footage"><span class="glow"></span></div></div>
+        <div class="meta"><span class="t">Torn dissolve</span><span class="tech">SVG turbulence mask</span></div>
+        <p class="note">An SVG mask whose edge is displaced by noise and blurred — an organic, analog falloff, never a clean line.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- IMPLEMENTATION -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">C · Implementation guide</span>
+    <h2>How the edges dissolve.</h2>
+    <p class="lede">The container's background is the stage itself, so wherever the mask reaches zero the video simply becomes the room. The two core moves:</p>
+<pre><code><span class="c">/* 1 · spotlight pool — the footage fades to nothing at its edges */</span>
+.stage-video <span class="k">video</span>{
+  <span class="k">-webkit-mask-image</span>: <span class="f">radial-gradient</span>(56% 70% at 50% 46%, #000 36%, transparent 82%);
+          <span class="k">mask-image</span>: <span class="f">radial-gradient</span>(56% 70% at 50% 46%, #000 36%, transparent 82%);
+}                                  <span class="c">/* black = keep, transparent = dissolve into stage */</span>
+
+<span class="c">/* 2 · torn, analog edge — an SVG mask displaced by noise, then blurred */</span>
+.stage-video.torn <span class="k">video</span>{
+  <span class="k">mask-image</span>: <span class="f">url</span>("data:image/svg+xml, … feTurbulence + feDisplacementMap + feGaussianBlur …");
+  <span class="k">mask-size</span>: cover; <span class="k">mask-repeat</span>: no-repeat;
+}
+
+<span class="c">/* 3 · shadows of boxes falling across the frame */</span>
+.stage-video .shadow b{
+  position: absolute; background: <span class="f">linear-gradient</span>(180deg, rgba(8,6,4,.92), transparent);
+  <span class="k">clip-path</span>: <span class="f">polygon</span>(0 0, 86% 6%, 72% 96%, 0 84%);  <span class="c">/* a box silhouette */</span>
+  <span class="k">filter</span>: <span class="f">blur</span>(7px);                              <span class="c">/* soft, like a real cast shadow */</span>
+}
+
+<span class="c">/* the actual markup — ambient footage, no chrome */</span>
+&lt;<span class="k">div</span> class="stage-video torn"&gt;
+  &lt;<span class="k">video</span> src="diogo-solo.mp4" muted loop autoplay playsinline
+         poster="diogo-still-charcoal.jpg"&gt;&lt;/<span class="k">video</span>&gt;
+&lt;/<span class="k">div</span>&gt;</code></pre>
+    <p class="lede" style="margin-top:22px;">Use <span class="mono" style="color:var(--kraft)">-webkit-mask-*</span> alongside the unprefixed properties for Safari. The poster is a charcoal still from the mood board, so the frame reads on the stage even before play.</p>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">D · Framing principles</span>
+    <h2>Alive, analog, integrated.</h2>
+    <div class="notes">
+      <div class="ncard"><span class="ix">↳ 01</span><h3>The background is the frame</h3><p>No borders, no cards. The container shares the stage's colour, so masked edges become the room — seamless, not pasted on.</p></div>
+      <div class="ncard"><span class="ix">↳ 02</span><h3>Light breathes</h3><p>The spotlight vignette drifts and swells on a slow cycle, so the pool feels lit by a living source rather than a static gradient.</p></div>
+      <div class="ncard"><span class="ix">↳ 03</span><h3>Gentle masks for content, strong for atmosphere</h3><p>Primary footage with information keeps a softer vignette so nothing important is cropped; ambient clips can dissolve hard.</p></div>
+      <div class="ncard"><span class="ix">↳ 04</span><h3>Accessible underneath</h3><p>Real players keep captions and controls; masking is purely visual. <span class="mono" style="color:var(--breath)">prefers-reduced-motion</span> stills the breathing and drift.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span class="mono">SIBELA &amp; DIGOO · WEB DOC · VIDEO FRAMING</span>
+    <span class="mono">ITI / LARSyS · Dançando com a Diferença</span>
+  </div>
+</footer>
+
+</body>
+</html>

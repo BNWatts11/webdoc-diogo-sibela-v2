@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Doc · Deliverable 1 — Structure Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1510;--stage-wash:#241D16;--stage-deep:#100C09;--penumbra:#241D16;--penumbra-2:#2C241B;
+    --bone:#ECE4D6;--ash:#9D9389;--ash-dim:#6E655E;
+    --kraft:#C4885A;--kraft-deep:#8C5E38;--breath:#A8BAB8;--breath-deep:#6E8482;
+    --line:rgba(236,228,214,0.13);--line-strong:rgba(236,228,214,0.26);
+    --serif:'Fraunces',Georgia,serif;--sans:'Atkinson Hyperlegible',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;
+    --maxw:1140px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;color:var(--bone);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    background-color:var(--ink);
+    background-image:
+      radial-gradient(125% 90% at 50% -12%, rgba(236,228,214,0.06), transparent 60%),
+      radial-gradient(70% 55% at 16% 28%, rgba(168,186,184,0.05), transparent 62%),
+      radial-gradient(72% 58% at 86% 72%, rgba(196,136,90,0.06), transparent 62%),
+      linear-gradient(176deg, var(--stage-wash) 0%, var(--ink) 42%, var(--stage-deep) 100%);
+    background-attachment:fixed;position:relative;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;
+    opacity:.055;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size:220px 220px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .mono{font-family:var(--mono);}
+  ::selection{background:var(--kraft);color:var(--ink);}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);}
+
+  /* header */
+  header{position:relative;padding:74px 0 40px;overflow:hidden;border-bottom:1px solid var(--line);}
+  .spot{position:absolute;inset:0;z-index:0;background:radial-gradient(80% 70% at 50% -20%,rgba(236,228,214,.10),transparent 55%),radial-gradient(50% 60% at 78% 40%,rgba(196,136,90,.10),transparent 60%);pointer-events:none;}
+  header .wrap{position:relative;z-index:1;}
+  .delv{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--kraft);border:1px solid var(--kraft-deep);border-radius:99px;padding:5px 13px;margin-bottom:26px;}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(2.6rem,7vw,5rem);line-height:.98;letter-spacing:-.02em;margin:0 0 14px;}
+  h1 em{font-style:italic;}
+  .sub{font-size:1.2rem;color:var(--ash);max-width:60ch;margin:0;}
+  .sub b{color:var(--bone);font-weight:700;}
+
+  section{padding:64px 0;border-bottom:1px solid var(--line);}
+  h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.8rem,3.8vw,2.7rem);line-height:1.04;margin:0 0 8px;letter-spacing:-.01em;}
+  .lede{font-size:1.12rem;color:var(--ash);max-width:64ch;margin:0 0 8px;}
+  p{max-width:68ch;}
+
+  /* ===== navigation map (exact structure) ===== */
+  .map{margin-top:38px;display:grid;grid-template-columns:1fr;gap:0;}
+  .home-pill{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--kraft);background:rgba(196,136,90,.08);color:var(--bone);border-radius:3px;padding:12px 20px;margin-bottom:8px;width:max-content;}
+  .home-pill::before{content:"◇";color:var(--kraft);}
+  .spine{border-left:1px solid var(--line-strong);margin-left:18px;padding-left:0;}
+  .stop{position:relative;padding:0 0 4px 30px;}
+  .stop::before{content:"";position:absolute;left:-5px;top:22px;width:9px;height:9px;border-radius:99px;background:var(--kraft);}
+  .stop.cool::before{background:var(--breath);}
+  .stop-inner{border:1px solid var(--line);border-radius:4px;padding:16px 20px;margin:10px 0;background:linear-gradient(180deg,rgba(255,255,255,.018),transparent);}
+  .stop-num{font-family:var(--mono);font-size:11px;color:var(--kraft);letter-spacing:.12em;}
+  .stop.cool .stop-num{color:var(--breath);}
+  .stop h3{font-family:var(--serif);font-weight:400;font-size:1.35rem;margin:2px 0 2px;letter-spacing:-.01em;}
+  .stop .desc{font-size:.92rem;color:var(--ash);margin:0;}
+  .subitems{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px;}
+  .subitems span{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line-strong);border-radius:99px;padding:4px 10px;color:var(--ash);}
+  .subitems span.opt{border-style:dashed;color:var(--ash-dim);}
+  .subitems span.key{color:var(--bone);border-color:var(--kraft-deep);}
+  .pov{margin-top:11px;font-size:.86rem;color:var(--breath);font-family:var(--mono);letter-spacing:.04em;}
+
+  /* ===== flow ===== */
+  .flow{display:flex;align-items:stretch;gap:0;margin-top:38px;flex-wrap:wrap;}
+  .fstep{flex:1 1 150px;border:1px solid var(--line);border-radius:4px;padding:18px;margin:6px;position:relative;background:var(--penumbra);}
+  .fstep .fn{font-family:var(--mono);font-size:10px;color:var(--kraft);letter-spacing:.16em;}
+  .fstep h4{font-family:var(--serif);font-weight:400;font-size:1.1rem;margin:6px 0 4px;}
+  .fstep p{font-size:.85rem;color:var(--ash);margin:0;}
+
+  /* ===== wireframe screens ===== */
+  .screens{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:40px;}
+  .screen{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--penumbra);}
+  .screen .bar{display:flex;gap:6px;align-items:center;padding:9px 12px;border-bottom:1px solid var(--line);background:var(--penumbra-2);}
+  .screen .bar i{width:9px;height:9px;border-radius:99px;background:var(--ash-dim);display:block;}
+  .screen .bar .url{font-family:var(--mono);font-size:10.5px;color:var(--ash);margin-left:8px;letter-spacing:.03em;}
+  .screen .body{padding:18px;min-height:190px;}
+  .screen .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--kraft);padding:0 18px 16px;}
+  .screen .cap span{color:var(--ash);}
+  .wf{background:rgba(236,228,214,0.06);border-radius:2px;}
+  .wf.line{height:9px;margin-bottom:9px;}
+  .wf.line.s{width:55%;}.wf.line.xs{width:34%;}
+  .wf.block{margin-bottom:12px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--ash);letter-spacing:.08em;text-align:center;border:1px dashed var(--line-strong);background:transparent;padding:6px;}
+  .wf-row{display:flex;gap:10px;margin-bottom:12px;}
+  .wf-row .wf{flex:1;}
+  .timeline-wf{height:30px;border:1px solid var(--line-strong);border-radius:3px;display:flex;align-items:center;padding:0 8px;gap:6px;margin-bottom:10px;}
+  .timeline-wf .pin{width:8px;height:8px;border-radius:99px;background:var(--kraft);}
+  .timeline-wf .pin.b{background:var(--breath);}
+  .timeline-wf .track{flex:1;height:2px;background:var(--line-strong);}
+  .lanes .lane{height:12px;border-radius:99px;margin-bottom:6px;opacity:.5;}
+  .lanes .lane.k{background:linear-gradient(90deg,var(--kraft),transparent);}
+  .lanes .lane.b{background:linear-gradient(90deg,var(--breath),transparent);}
+  .pill-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px;}
+  .pill{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;border:1px solid var(--line-strong);border-radius:99px;padding:4px 9px;color:var(--ash);text-transform:uppercase;}
+  .pill.opt{border-style:dashed;}
+
+  .note{font-size:.92rem;color:var(--ash);margin-top:26px;border-left:2px solid var(--breath-deep);padding-left:18px;}
+
+  footer{padding:40px 0 60px;}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:baseline;}
+  .foot-row .mono{font-size:11px;color:var(--ash-dim);letter-spacing:.1em;}
+
+  @media(max-width:860px){.screens{grid-template-columns:1fr;}body{font-size:16px;}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{transition:none!important;}}
+  :focus-visible{outline:2px solid var(--kraft);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<nav aria-label="Package navigation" style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 28px;border-bottom:1px solid var(--line);background:var(--penumbra-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;flex-wrap:wrap;">
+  <a href="index.html" style="color:var(--kraft);text-decoration:none;white-space:nowrap;">↤ All deliverables</a>
+  <span style="color:var(--ash);">PLANNING DOCUMENT 1 OF 5 <span style="color:var(--ash-dim);">(not the web doc's navigation)</span></span>
+  <span><a href="02-mood-board.html" style="color:var(--kraft);text-decoration:none;white-space:nowrap;">Next ↦</a></span>
+</nav>
+
+<header>
+  <div class="spot" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="delv">Deliverable 1 / 5 · Structure Mockup</span>
+    <h1>How a visitor moves<br>through the <em>web doc</em>.</h1>
+    <p class="sub">The navigation backbone follows <b>your structure exactly</b> — nine stops on one spine, with optional depth at each. Below: the full map, the entry flow, and wireframes of every screen type.</p>
+  </div>
+</header>
+
+<!-- ===== 1. NAVIGATION MAP ===== -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">A · Navigation map</span>
+    <h2>The spine, item by item.</h2>
+    <p class="lede">One linear path a visitor can follow start to finish — or jump around using the persistent chapter menu. Cool dots mark Isabela's pole, warm dots Diogo's.</p>
+
+    <div class="map">
+      <span class="home-pill">The House — darkened, before you enter</span>
+      <div class="spine">
+
+        <div class="stop">
+          <div class="stop-inner">
+            <div class="stop-num">01</div>
+            <h3>Inclusive Dance</h3>
+            <p class="desc">Opening statement — bodily difference as artistic language, not a problem to fix. Sets the register for everything after.</p>
+          </div>
+        </div>
+
+        <div class="stop">
+          <div class="stop-inner">
+            <div class="stop-num">02</div>
+            <h3>Inclusive Dance — Summary</h3>
+            <p class="desc">The tight conceptual summary. One short passage a visitor can read in under a minute before meeting the people.</p>
+          </div>
+        </div>
+
+        <div class="stop">
+          <div class="stop-inner">
+            <div class="stop-num">03</div>
+            <h3>Dançando com a Diferença</h3>
+            <p class="desc">The company — mission, the “Invisibility Cycle”, the people behind the room.</p>
+          </div>
+        </div>
+
+        <div class="stop">
+          <div class="stop-inner">
+            <div class="stop-num">04</div>
+            <h3>Tânia Carvalho</h3>
+            <p class="desc">Choreographer — method and the two conceptual texts. Context, not the spine: the dancers carry the story.</p>
+          </div>
+        </div>
+
+        <div class="stop">
+          <div class="stop-inner">
+            <div class="stop-num">05</div>
+            <h3>Diogo — Dancer</h3>
+            <p class="desc">Narrated by Diogo himself.</p>
+            <div class="subitems">
+              <span class="key">Who is he?</span>
+              <span class="key">Performance</span>
+              <span class="opt">◇ Possible interview (optional)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stop cool">
+          <div class="stop-inner">
+            <div class="stop-num">06</div>
+            <h3>Isabela — Dancer</h3>
+            <p class="desc">Narrated by Isabela herself.</p>
+            <div class="subitems">
+              <span class="key">Who is she?</span>
+              <span class="key">Performance</span>
+              <span class="opt">◇ Possible interview (optional)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stop">
+          <div class="stop-inner">
+            <div class="stop-num">07</div>
+            <h3>Preparation / Process for the Performances</h3>
+            <p class="desc">How the two solos were built — including both storyboards.</p>
+            <div class="subitems">
+              <span>Rehearsal observation</span>
+              <span class="key">Storyboard — VR (Isabela)</span>
+              <span class="key">Storyboard — Projection (Diogo)</span>
+            </div>
+            <p class="pov">▸ Shared point of view — dancers + rehearsal room, not only the choreographer.</p>
+          </div>
+        </div>
+
+        <div class="stop">
+          <div class="stop-inner">
+            <div class="stop-num">08</div>
+            <h3>Performance</h3>
+            <p class="desc">An interactive timeline of the two-act show.</p>
+            <div class="subitems">
+              <span class="key">Audio clips</span>
+              <span class="key">Video clips</span>
+              <span>Notes / information</span>
+              <span>Movement-quality lanes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stop">
+          <div class="stop-inner">
+            <div class="stop-num">09</div>
+            <h3>Post-Dance — what remains on stage</h3>
+            <p class="desc">The objects the dancing leaves behind.</p>
+            <div class="subitems">
+              <span class="key">Diogo's boxes</span>
+              <span class="key">The chair (centre of Isabela's solo)</span>
+              <span>Collective “Final Map”</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 2. ENTRY FLOW ===== -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">B · Entry flow</span>
+    <h2>Three steps from arrival to immersion.</h2>
+    <p class="lede">The home screen does one job: pull the visitor off the menu and onto the spine. Depth is opt-in, so no one is ever lost.</p>
+
+    <div class="flow">
+      <div class="fstep"><div class="fn">STEP 01</div><h4>Arrive in the dark</h4><p>A darkened stage. One light finds a silhouette. The title resolves; a single “enter” invites the spine.</p></div>
+      <div class="fstep"><div class="fn">STEP 02</div><h4>Choose a way in</h4><p>Follow the linear spine, or pick a pole — Isabela's Inner Flow or Diogo's Kinetic Boxes — straight from the portal.</p></div>
+      <div class="fstep"><div class="fn">STEP 03</div><h4>Read at your own pace</h4><p>Each stop offers opt-in panels. The chapter menu stays visible; sound from the piece carries across screens.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3. WIREFRAME SCREENS ===== -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">C · Wireframe screens</span>
+    <h2>Every screen type, labelled to your structure.</h2>
+    <p class="lede">Six templates cover all nine stops. Each caption names the structure item it serves.</p>
+
+    <div class="screens">
+
+      <!-- Home -->
+      <div class="screen">
+        <div class="bar"><i></i><i></i><i></i><span class="url">/ — entry</span></div>
+        <div class="body">
+          <div class="wf line xs"></div>
+          <div class="wf block" style="height:118px;">SPOTLIGHT TITLE · “enter”<br>silhouette emerges from dark</div>
+          <div class="wf-row">
+            <div class="wf block" style="height:50px;">INNER FLOW → Isabela</div>
+            <div class="wf block" style="height:50px;">KINETIC BOXES → Diogo</div>
+          </div>
+          <div class="pill-row"><span class="pill">the ways in</span></div>
+        </div>
+        <div class="cap">The House <span>· home / portal</span></div>
+      </div>
+
+      <!-- Context template -->
+      <div class="screen">
+        <div class="bar"><i></i><i></i><i></i><span class="url">/inclusive-dance · /summary · /company · /tania</span></div>
+        <div class="body">
+          <div class="wf line"></div><div class="wf line s"></div>
+          <div class="wf block" style="height:80px;">INTRO FILM / KEY IMAGE</div>
+          <div class="wf line"></div><div class="wf line xs"></div>
+          <div class="pill-row"><span class="pill">read more ◇</span><span class="pill">next stop →</span></div>
+        </div>
+        <div class="cap">Context template <span>· Inclusive Dance · Summary · DcD · Tânia Carvalho</span></div>
+      </div>
+
+      <!-- Dancer profile -->
+      <div class="screen">
+        <div class="bar"><i></i><i></i><i></i><span class="url">/diogo · /isabela — dancer profile</span></div>
+        <div class="body">
+          <div class="wf-row">
+            <div class="wf block" style="height:128px;width:38%;flex:0 0 38%;">PORTRAIT<br>(silhouette)</div>
+            <div style="flex:1;">
+              <div class="wf line"></div><div class="wf line s"></div><div class="wf line"></div>
+              <div class="pill-row"><span class="pill">Who is he/she?</span><span class="pill">Performance</span><span class="pill opt">Interview ◇ optional</span></div>
+            </div>
+          </div>
+          <div class="wf block" style="height:54px;">SCENIC OBJECT — boxes (Diogo) / chair (Isabela)</div>
+        </div>
+        <div class="cap">Dancer profile <span>· Who is he/she? + Performance + Interview (opt)</span></div>
+      </div>
+
+      <!-- Process -->
+      <div class="screen">
+        <div class="bar"><i></i><i></i><i></i><span class="url">/process — preparation</span></div>
+        <div class="body">
+          <div class="wf line s"></div>
+          <div class="wf-row">
+            <div class="wf block" style="height:74px;">STORYBOARD · VR<br>6 panels · Isabela</div>
+            <div class="wf block" style="height:74px;">STORYBOARD · Projection<br>6 panels · Diogo</div>
+          </div>
+          <div class="wf block" style="height:44px;">REHEARSAL-ROOM VIDEO · shared point of view</div>
+        </div>
+        <div class="cap">Process <span>· both storyboards · not only the choreographer</span></div>
+      </div>
+
+      <!-- Performance timeline -->
+      <div class="screen">
+        <div class="bar"><i></i><i></i><i></i><span class="url">/performance — interactive timeline</span></div>
+        <div class="body">
+          <div class="wf block" style="height:90px;">PERFORMANCE VIDEO</div>
+          <div class="timeline-wf"><span class="pin"></span><div class="track"></div><span class="pin b"></span><div class="track"></div><span class="pin"></span></div>
+          <div class="lanes"><div class="lane b">&nbsp;</div><div class="lane k">&nbsp;</div></div>
+          <div class="pill-row"><span class="pill">audio</span><span class="pill">video</span><span class="pill">notes</span><span class="pill">quality lane</span></div>
+        </div>
+        <div class="cap">Performance <span>· timeline · audio / video / information</span></div>
+      </div>
+
+      <!-- Post-Dance -->
+      <div class="screen">
+        <div class="bar"><i></i><i></i><i></i><span class="url">/post-dance — what remains</span></div>
+        <div class="body">
+          <div class="wf-row">
+            <div class="wf block" style="height:78px;">DIGOO'S BOXES<br>drag · stack · dismantle</div>
+            <div class="wf block" style="height:78px;">THE CHAIR<br>still · centred</div>
+          </div>
+          <div class="wf block" style="height:54px;">“HOW THE AUDIENCE COMPOSED TODAY” · collective map</div>
+        </div>
+        <div class="cap">Post-Dance <span>· Diogo's boxes + Isabela's chair</span></div>
+      </div>
+
+    </div>
+
+    <p class="note">Interaction stays faithful to Tânia Carvalho's brief: the technology is invisible. Transitions are light and shadow, not interface chrome; no “correct” gesture is ever required; the whole spine works by keyboard alone.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span class="mono">SIBELA &amp; DIGOO · WEB DOC · DELIVERABLE 1 / 5 — STRUCTURE MOCKUP</span>
+    <span class="mono">ITI / LARSyS · Dançando com a Diferença</span>
+  </div>
+</footer>
+
+</body>
+</html>

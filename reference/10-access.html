@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" data-scene="house">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Doc · Accessibility as Art</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1510;--stage-wash:#241D16;--stage-deep:#100C09;--penumbra:#241D16;--penumbra-2:#2C241B;
+    --bone:#ECE4D6;--ash:#9D9389;--ash-dim:#6E655E;
+    --kraft:#C4885A;--kraft-deep:#8C5E38;--breath:#A8BAB8;--breath-deep:#6E8482;
+    --newsprint:#E7DFCE;--charcoal:#241f1a;
+    --line:rgba(236,228,214,0.13);--line-strong:rgba(236,228,214,0.26);
+    --serif:'Fraunces',Georgia,serif;--sans:'Atkinson Hyperlegible',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;--hand:'Caveat',cursive;
+    --maxw:1140px;--ease:cubic-bezier(.62,.05,.2,1);
+  }
+  /* ===== ALTERNATE STAGE-LIGHTING SCENES (high-contrast, by design) ===== */
+  html[data-scene="silhouette"]{
+    --ink:#000000;--stage-wash:#000000;--stage-deep:#000000;--penumbra:#0c0c0c;--penumbra-2:#141414;
+    --bone:#FFFFFF;--ash:#E6E6E6;--ash-dim:#BcBcBc;
+    --kraft:#FFB54D;--kraft-deep:#FFB54D;--breath:#FFB54D;--breath-deep:#FFB54D;
+    --line:rgba(255,255,255,.42);--line-strong:rgba(255,255,255,.72);
+  }
+  html[data-scene="wash"]{
+    --ink:#00131C;--stage-wash:#00131C;--stage-deep:#000a0f;--penumbra:#08222e;--penumbra-2:#0c2c3a;
+    --bone:#EAF7FF;--ash:#AECBD9;--ash-dim:#7FA4B5;
+    --kraft:#5FD0FF;--kraft-deep:#5FD0FF;--breath:#5FD0FF;--breath-deep:#5FD0FF;
+    --line:rgba(180,230,255,.32);--line-strong:rgba(180,230,255,.62);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;color:var(--bone);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    background-color:var(--ink);
+    background-image:
+      radial-gradient(125% 90% at 50% -12%, rgba(236,228,214,0.06), transparent 60%),
+      radial-gradient(70% 55% at 16% 28%, rgba(168,186,184,0.05), transparent 62%),
+      radial-gradient(72% 58% at 86% 72%, rgba(196,136,90,0.06), transparent 62%),
+      linear-gradient(176deg, var(--stage-wash) 0%, var(--ink) 42%, var(--stage-deep) 100%);
+    background-attachment:fixed;position:relative;transition:background-color .7s var(--ease),color .5s ease;
+  }
+  /* in the designed high-contrast scenes, drop the warm wash + grain for maximum clarity */
+  html[data-scene="silhouette"] body,html[data-scene="wash"] body{background-image:none;}
+  html[data-scene="silhouette"] body::before,html[data-scene="wash"] body::before{opacity:0;}
+  html[data-scene="silhouette"] body,html[data-scene="wash"] body{font-weight:400;}
+  body::before{
+    content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.055;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size:220px 220px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .mono{font-family:var(--mono);}
+  ::selection{background:var(--kraft);color:var(--ink);}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);}
+
+  .pkgnav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 28px;border-bottom:1px solid var(--line);background:var(--penumbra-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;flex-wrap:wrap;}
+  .pkgnav a{color:var(--kraft);text-decoration:none;white-space:nowrap;}
+  .pkgnav span{color:var(--ash);}
+
+  header{position:relative;padding:60px 0 28px;overflow:hidden;}
+  header .wrap{position:relative;z-index:1;}
+  .delv{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--kraft);border:1px solid var(--kraft-deep);border-radius:99px;padding:5px 13px;margin-bottom:24px;}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(2.4rem,6.4vw,4.6rem);line-height:1;letter-spacing:-.02em;margin:0 0 14px;}
+  html[data-scene="silhouette"] h1,html[data-scene="wash"] h1{font-weight:400;}
+  h1 em{font-style:italic;}
+  .sub{font-size:1.16rem;color:var(--ash);max-width:62ch;margin:0;}
+  .sub b{color:var(--bone);font-weight:700;}
+
+  section{padding:48px 0;border-bottom:1px solid var(--line);}
+  h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.7rem,3.6vw,2.5rem);line-height:1.05;margin:0 0 8px;letter-spacing:-.01em;}
+  html[data-scene="silhouette"] h2,html[data-scene="wash"] h2{font-weight:400;}
+  .lede{font-size:1.1rem;color:var(--ash);max-width:64ch;margin:0 0 8px;}
+
+  /* ===== the house console (controls, not a corner widget) ===== */
+  .console{border:1px solid var(--line-strong);border-radius:10px;padding:8px;margin-top:30px;background:linear-gradient(180deg,rgba(255,255,255,.025),transparent);}
+  .console-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px 14px;border-bottom:1px solid var(--line);}
+  .console-head .ttl{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);}
+  .console-head .ttl b{color:var(--bone);}
+  .console-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:12px;}
+  .ctrl{border:1px solid var(--line);border-radius:8px;padding:16px 18px;}
+  .ctrl .lab{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:12px;}
+  .ctrl .lab .name{font-family:var(--serif);font-size:1.1rem;}
+  .ctrl .lab .sys{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash-dim);}
+  .scenes{display:flex;gap:7px;flex-wrap:wrap;}
+  .scene-btn,.toggle{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ash);background:none;border:1px solid var(--line-strong);border-radius:99px;padding:8px 13px;cursor:pointer;transition:all .4s var(--ease);}
+  .scene-btn[aria-pressed="true"],.toggle[aria-pressed="true"]{background:var(--kraft);color:var(--ink);border-color:var(--kraft);}
+  .scene-btn:hover,.toggle:hover{border-color:var(--bone);color:var(--bone);}
+  .scene-btn[aria-pressed="true"]:hover,.toggle[aria-pressed="true"]:hover{color:var(--ink);}
+  .ctrl .desc{font-size:.84rem;color:var(--ash);margin:12px 0 0;}
+
+  /* ===== transcript as rehearsal diary ===== */
+  .diary-wrap{margin-top:38px;}
+  .diary-toggle{display:flex;gap:8px;margin-bottom:18px;}
+  .diary{background:var(--newsprint);color:var(--charcoal);border-radius:3px;padding:34px 38px;position:relative;
+    box-shadow:0 22px 50px -22px rgba(0,0,0,.8);max-width:760px;}
+  html[data-scene="silhouette"] .diary,html[data-scene="wash"] .diary{background:#000;color:#fff;border:2px solid var(--line-strong);box-shadow:none;}
+  .diary::before{content:"";position:absolute;top:-10px;left:40px;width:90px;height:22px;background:rgba(214,200,168,.55);transform:rotate(-3deg);}
+  html[data-scene="silhouette"] .diary::before,html[data-scene="wash"] .diary::before{display:none;}
+  .diary .dhead{font-family:var(--hand);font-size:1.7rem;color:#6a4a28;margin:0 0 4px;transform:rotate(-1deg);}
+  html[data-scene="silhouette"] .diary .dhead,html[data-scene="wash"] .diary .dhead{color:var(--kraft);}
+  .diary .dmeta{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8a7d68;margin-bottom:22px;border-bottom:1px solid rgba(90,80,60,.3);padding-bottom:14px;}
+  .line{display:flex;gap:16px;margin:0 0 16px;align-items:flex-start;}
+  .line .tc{font-family:var(--mono);font-size:11px;color:#9a7b4e;flex:0 0 52px;padding-top:5px;}
+  html[data-scene="silhouette"] .line .tc,html[data-scene="wash"] .line .tc{color:var(--kraft);}
+  .line .txt{font-family:var(--mono);font-size:.96rem;line-height:1.7;color:#2e2820;}
+  html[data-scene="silhouette"] .line .txt,html[data-scene="wash"] .line .txt{color:#fff;}
+  .line .txt s{color:#9a8f7c;text-decoration-thickness:1px;}
+  .note-h{font-family:var(--hand);font-size:1.45rem;color:#7a2f12;line-height:1.15;display:block;margin:4px 0 0;}
+  html[data-scene="silhouette"] .note-h,html[data-scene="wash"] .note-h{color:var(--kraft);}
+  .ad{font-style:italic;color:#5f5645;}
+  html[data-scene="silhouette"] .ad,html[data-scene="wash"] .ad{color:#FFD89B;}
+  html[data-scene="wash"] .ad{color:#BfeaFF;}
+  .diary.plain .note-h{display:none;}
+  .diary.plain .ad{display:none;}
+  .diary.plain{font-family:var(--mono);}
+  .diary.plain::before{display:none;}
+  .ad-row{margin-top:4px;}
+  .diary:not(.ad-on) .ad-row{display:none;}
+
+  /* ===== lighting demo strip ===== */
+  .litstrip{display:flex;gap:10px;margin-top:30px;flex-wrap:wrap;}
+  .litcell{flex:1 1 200px;border:1px solid var(--line);border-radius:8px;padding:20px;min-height:120px;display:flex;flex-direction:column;justify-content:space-between;}
+  .litcell .cue{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--kraft);}
+  .litcell h4{font-family:var(--serif);font-weight:400;font-size:1.2rem;margin:8px 0 4px;}
+  .litcell p{margin:0;font-size:.84rem;color:var(--ash);}
+  .litcell .chip{width:100%;height:8px;border-radius:99px;margin-top:12px;}
+
+  /* ===== code & notes ===== */
+  pre{margin:26px 0 0;background:#0F0C09;border:1px solid var(--line);border-radius:8px;padding:22px 24px;overflow-x:auto;}
+  html[data-scene="silhouette"] pre,html[data-scene="wash"] pre{background:#0a0a0a;border-color:var(--line-strong);}
+  code{font-family:var(--mono);font-size:12.5px;line-height:1.85;color:#D9CFBE;}
+  html[data-scene="silhouette"] code,html[data-scene="wash"] code{color:#eee;}
+  code .c{color:#7E7468;font-style:italic;}code .k{color:var(--kraft);}code .f{color:var(--breath);}
+  .notes{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:32px;}
+  .ncard{border:1px solid var(--line);border-radius:6px;padding:22px;}
+  .ncard .ix{font-family:var(--mono);font-size:11px;color:var(--breath);letter-spacing:.1em;}
+  .ncard h3{font-family:var(--serif);font-weight:400;font-size:1.14rem;margin:7px 0 5px;}
+  .ncard p{margin:0;font-size:.92rem;color:var(--ash);}
+
+  footer{padding:40px 0 60px;}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:baseline;}
+  .foot-row .mono{font-size:11px;color:var(--ash-dim);letter-spacing:.1em;}
+
+  @media(max-width:860px){body{font-size:16px;}.console-grid,.notes{grid-template-columns:1fr;}.diary{padding:26px 22px;}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{transition:none!important;}}
+  :focus-visible{outline:3px solid var(--kraft);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<nav class="pkgnav" aria-label="Package navigation">
+  <a href="index.html">↤ All deliverables</a>
+  <span>ACCESSIBILITY AS ART · COMPONENT</span>
+  <a href="09-final-map.html">The Final Map ↦</a>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="delv">Component · Accessibility as Art</span>
+    <h1>Access is part of<br>the <em>staging</em>.</h1>
+    <p class="sub">No corner widget, no clinical overlay. The controls belong to the work: high contrast is a <b>lighting cue</b> the visitor calls, the transcript is a <b>rehearsal diary</b> you're invited to read, and the described track is a <b>second voice</b> in the room. Try the console — it re-lights this whole page.</p>
+  </div>
+</header>
+
+<!-- A · THE CONSOLE -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">A · The house console</span>
+    <h2>The controls, designed as part of the room.</h2>
+    <div class="console">
+      <div class="console-head"><span class="ttl"><b>House controls</b> &nbsp;· &nbsp;set the room to how you need it</span><span class="ttl">live</span></div>
+      <div class="console-grid">
+
+        <div class="ctrl">
+          <div class="lab"><span class="name">Stage lighting</span><span class="sys">high contrast</span></div>
+          <div class="scenes" role="group" aria-label="Stage lighting scene">
+            <button class="scene-btn" data-scene="house" aria-pressed="true">House · warm</button>
+            <button class="scene-btn" data-scene="silhouette" aria-pressed="false">Silhouette</button>
+            <button class="scene-btn" data-scene="wash" aria-pressed="false">Cold wash</button>
+          </div>
+          <p class="desc">Three designed lighting states — each meets AAA contrast, none looks like a default high-contrast template. Watch the whole page change.</p>
+        </div>
+
+        <div class="ctrl">
+          <div class="lab"><span class="name">The described track</span><span class="sys">audio description</span></div>
+          <button class="toggle" id="adBtn" aria-pressed="false">Described track · off</button>
+          <p class="desc">A second voice that narrates the movement — woven into the diary below as stage directions, not hidden in a separate file.</p>
+        </div>
+
+        <div class="ctrl">
+          <div class="lab"><span class="name">The rehearsal diary</span><span class="sys">transcript</span></div>
+          <button class="toggle" id="diaryBtn" aria-pressed="true">Diary view · on</button>
+          <p class="desc">Read the transcript as the dancer's raw rehearsal notes — or switch to a plain transcript if that reads easier for you.</p>
+        </div>
+
+        <div class="ctrl">
+          <div class="lab"><span class="name">Stillness</span><span class="sys">reduced motion</span></div>
+          <button class="toggle" id="stillBtn" aria-pressed="false">Stillness · off</button>
+          <p class="desc">Hold the room still — no drift, no breathing light. Honoured automatically if your system already asks for reduced motion.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- B · TRANSCRIPT AS DIARY -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">B · Transcript</span>
+    <h2>Not a wall of text — a diary you're let into.</h2>
+    <p class="lede">The same words a screen reader receives, set as Isabela's rehearsal notes: timecodes in the margin, the movement described, and the dancer's own hand in the gaps. Toggle the described track and diary view in the console above.</p>
+
+    <div class="diary-wrap">
+      <article class="diary ad-on" id="diary" aria-label="Rehearsal diary transcript, Isabela's chair solo">
+        <p class="dhead">the chair solo — still finding the end</p>
+        <p class="dmeta">Sala 2 · rehearsal transcript · Isabela / “Sibela” · take 4</p>
+
+        <div class="line"><span class="tc">00:00</span><span class="txt">I come in from the dark and the chair is already there. I don't look at it yet.
+          <span class="note-h">it has to feel like it was waiting, not placed</span></span></div>
+
+        <div class="line"><span class="tc">00:14</span><span class="txt">Breath first. Everything slow. <s>I rush the first lower</s> — I rush the first lowering, every time. Slower.
+          <div class="ad-row ad">[She lowers toward the seat; the chair holds her weight; her hand stays open.]</div></span></div>
+
+        <div class="line"><span class="tc">00:38</span><span class="txt">Suspension on the inhale, then let the spine give. The chair is a partner, not a prop.
+          <span class="note-h">tell Tânia: the pause at :41 wants to be longer</span></span></div>
+
+        <div class="line"><span class="tc">01:02</span><span class="txt">Stillness. Long enough that someone in the room stops breathing with me.
+          <div class="ad-row ad">[She is motionless on the chair; only the light moves.]</div></span></div>
+
+        <div class="line"><span class="tc">01:20</span><span class="txt">Rise without using my hands. Leave the chair exactly as it was. That's the whole piece.
+          <span class="note-h">what remains is the chair — that's the point</span></span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- C · LIGHTING AS HIGH CONTRAST -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">C · High contrast, re-imagined</span>
+    <h2>Three lighting cues, not one “mode”.</h2>
+    <p class="lede">A high-contrast setting doesn't have to look like an emergency. Treated as stage lighting, it becomes a deliberate scene the visitor chooses — and still passes the numbers.</p>
+    <div class="litstrip">
+      <div class="litcell"><span class="cue">Cue 1 · default</span><h4>House warm</h4><p>The lived stage — warm linen, low light, the everyday room.</p><span class="chip" style="background:linear-gradient(90deg,#1A1510,#C4885A);"></span></div>
+      <div class="litcell"><span class="cue">Cue 2 · AAA</span><h4>Silhouette</h4><p>Pure black, white text, one amber spotlight. 21:1 contrast — the starkest lighting state.</p><span class="chip" style="background:linear-gradient(90deg,#000,#FFB54D);"></span></div>
+      <div class="litcell"><span class="cue">Cue 3 · AAA</span><h4>Cold wash</h4><p>Deep teal-black with a cyan key — a cooler high-contrast scene for different eyes.</p><span class="chip" style="background:linear-gradient(90deg,#00131C,#5FD0FF);"></span></div>
+    </div>
+<pre><code><span class="c">/* high contrast IS a lighting scene — swap the stage's variables, keep the layout */</span>
+html[data-scene="silhouette"]{
+  <span class="k">--ink</span>: #000;  <span class="k">--bone</span>: #fff;            <span class="c">/* 21:1 — AAA */</span>
+  <span class="k">--kraft</span>: #FFB54D;                        <span class="c">/* the single amber spotlight */</span>
+  <span class="k">--line-strong</span>: rgba(255,255,255,.72);
+}
+html[data-scene="silhouette"] body{ background: #000; }      <span class="c">/* drop the warm wash */</span>
+html[data-scene="silhouette"] body::before{ opacity: 0; }    <span class="c">/* and the grain, for clarity */</span>
+
+<span class="c">// the console just sets the scene; every component re-lights from the variables</span>
+btn.<span class="f">onclick</span> = () =&gt; document.documentElement.<span class="f">setAttribute</span>(<span class="k">'data-scene'</span>, btn.dataset.scene);</code></pre>
+  </div>
+</section>
+
+<!-- D · PRINCIPLES -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">D · Principles</span>
+    <h2>Designed in, never bolted on.</h2>
+    <div class="notes">
+      <div class="ncard"><span class="ix">↳ 01</span><h3>One door, not a side entrance</h3><p>Access lives in the main interface — the same console everyone uses — so no visitor is sent to a lesser, separate version of the work.</p></div>
+      <div class="ncard"><span class="ix">↳ 02</span><h3>The standards still hold</h3><p>Under the art: semantic HTML, real <span class="mono">aria-pressed</span> controls, full keyboard paths, visible focus, and AA/AAA contrast in every scene. Beautiful and conformant.</p></div>
+      <div class="ncard"><span class="ix">↳ 03</span><h3>Dignity over disclaimer</h3><p>The transcript is offered as something worth reading, not an obligation. Captions and descriptions are written with the same care as the script.</p></div>
+      <div class="ncard"><span class="ix">↳ 04</span><h3>The visitor sets the room</h3><p>Lighting, motion, the described voice — each is a choice the person makes for themselves, remembered across the site, never assumed.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span class="mono">SIBELA &amp; DIGOO · WEB DOC · ACCESSIBILITY AS ART</span>
+    <span class="mono">ITI / LARSyS · Dançando com a Diferença</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const root=document.documentElement;
+  // stage lighting scenes
+  const sceneBtns=[...document.querySelectorAll('.scene-btn')];
+  sceneBtns.forEach(btn=>btn.addEventListener('click',()=>{
+    root.setAttribute('data-scene', btn.dataset.scene);
+    sceneBtns.forEach(b=>b.setAttribute('aria-pressed', b===btn?'true':'false'));
+  }));
+  // described track
+  const diary=document.getElementById('diary');
+  const adBtn=document.getElementById('adBtn');
+  adBtn.addEventListener('click',()=>{
+    const on=diary.classList.toggle('ad-on');
+    adBtn.setAttribute('aria-pressed', on?'true':'false');
+    adBtn.textContent='Described track · '+(on?'on':'off');
+  });
+  // diary / plain transcript
+  const diaryBtn=document.getElementById('diaryBtn');
+  diaryBtn.addEventListener('click',()=>{
+    const plain=diary.classList.toggle('plain');
+    diaryBtn.setAttribute('aria-pressed', plain?'false':'true');
+    diaryBtn.textContent='Diary view · '+(plain?'off':'on');
+  });
+  // stillness
+  const stillBtn=document.getElementById('stillBtn');
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    stillBtn.setAttribute('aria-pressed','true'); stillBtn.textContent='Stillness · on';
+  }
+  stillBtn.addEventListener('click',()=>{
+    const on=stillBtn.getAttribute('aria-pressed')!=='true';
+    stillBtn.setAttribute('aria-pressed', on?'true':'false');
+    stillBtn.textContent='Stillness · '+(on?'on':'off');
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+	"version": "0.0.1",
+	"configurations": [
+		{
+			"name": "dev",
+			"runtimeExecutable": "/opt/homebrew/bin/node",
+			"runtimeArgs": ["/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js", "run", "dev"],
+			"port": 5173,
+			"autoPort": true,
+			"env": {
+				"PATH": "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+			}
+		},
+		{
+			"name": "reference",
+			"runtimeExecutable": "/opt/homebrew/bin/node",
+			"runtimeArgs": ["/Users/bernardowatts/Desktop/Tese-Prototipo/scripts/serve-reference.mjs"],
+			"port": 4173,
+			"autoPort": true
+		}
+	]
+}

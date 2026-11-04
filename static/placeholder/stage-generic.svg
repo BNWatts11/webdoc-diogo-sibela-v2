@@ -1,0 +1,5 @@
+<svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder — footage to be captured">
+  <rect width="240" height="200" fill="#1A1510"/>
+  <circle cx="120" cy="90" r="70" fill="none" stroke="#4A443D" stroke-width="1.5" stroke-dasharray="4 6"/>
+  <text x="120" y="94" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#9D9389" letter-spacing="1">TO SHOOT</text>
+</svg>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Doc · Sound Concept — Micro-soundscapes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1510;--stage-wash:#241D16;--stage-deep:#100C09;--penumbra:#241D16;--penumbra-2:#2C241B;
+    --bone:#ECE4D6;--ash:#9D9389;--ash-dim:#6E655E;
+    --kraft:#C4885A;--kraft-deep:#8C5E38;--breath:#A8BAB8;--breath-deep:#6E8482;
+    --line:rgba(236,228,214,0.13);--line-strong:rgba(236,228,214,0.26);
+    --serif:'Fraunces',Georgia,serif;--sans:'Atkinson Hyperlegible',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;--hand:'Caveat',cursive;
+    --maxw:1140px;
+    --ease-heavy:cubic-bezier(.62,.05,.2,1);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;color:var(--bone);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    background-color:var(--ink);
+    background-image:
+      radial-gradient(125% 90% at 50% -12%, rgba(236,228,214,0.06), transparent 60%),
+      radial-gradient(70% 55% at 16% 28%, rgba(168,186,184,0.05), transparent 62%),
+      radial-gradient(72% 58% at 86% 72%, rgba(196,136,90,0.06), transparent 62%),
+      linear-gradient(176deg, var(--stage-wash) 0%, var(--ink) 42%, var(--stage-deep) 100%);
+    background-attachment:fixed;position:relative;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.055;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size:220px 220px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .mono{font-family:var(--mono);}
+  ::selection{background:var(--kraft);color:var(--ink);}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);}
+
+  .pkgnav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 28px;border-bottom:1px solid var(--line);background:var(--penumbra-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;flex-wrap:wrap;}
+  .pkgnav a{color:var(--kraft);text-decoration:none;white-space:nowrap;}
+  .pkgnav span{color:var(--ash);}
+
+  header{position:relative;padding:64px 0 34px;overflow:hidden;border-bottom:1px solid var(--line);}
+  .spot{position:absolute;inset:0;z-index:0;background:radial-gradient(60% 70% at 70% 6%,rgba(168,186,184,.12),transparent 60%),radial-gradient(50% 60% at 22% 60%,rgba(196,136,90,.08),transparent 60%);pointer-events:none;}
+  header .wrap{position:relative;z-index:1;}
+  .delv{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--kraft);border:1px solid var(--kraft-deep);border-radius:99px;padding:5px 13px;margin-bottom:24px;}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(2.4rem,6.4vw,4.6rem);line-height:1;letter-spacing:-.02em;margin:0 0 14px;}
+  h1 em{font-style:italic;}
+  .sub{font-size:1.16rem;color:var(--ash);max-width:62ch;margin:0;}
+  .sub b{color:var(--bone);font-weight:700;}
+
+  section{padding:54px 0;border-bottom:1px solid var(--line);}
+  h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.7rem,3.6vw,2.5rem);line-height:1.05;margin:0 0 8px;letter-spacing:-.01em;}
+  .lede{font-size:1.1rem;color:var(--ash);max-width:64ch;margin:0 0 8px;}
+
+  /* ===== control bar ===== */
+  .console{display:flex;align-items:center;gap:22px;flex-wrap:wrap;border:1px solid var(--line);border-radius:8px;padding:20px 24px;margin-top:30px;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);}
+  .enable{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--kraft);border:0;border-radius:99px;padding:13px 22px;cursor:pointer;transition:transform .5s var(--ease-heavy),background .4s ease;}
+  .enable:hover{transform:translateY(-1px);}
+  .enable[data-on="true"]{background:var(--breath);}
+  .vol{display:flex;align-items:center;gap:12px;}
+  .vol label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);}
+  input[type=range]{accent-color:var(--kraft);width:130px;}
+  .pace{display:flex;align-items:center;gap:12px;margin-left:auto;}
+  .pace .meter{width:120px;height:6px;border-radius:99px;background:var(--line-strong);overflow:hidden;}
+  .pace .fill{height:100%;width:8%;background:linear-gradient(90deg,var(--breath),var(--kraft));transition:width .6s var(--ease-heavy);}
+  .pace .plabel{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);min-width:88px;}
+  .quiet-note{font-family:var(--hand);font-size:1.4rem;color:var(--breath);transform:rotate(-2deg);margin-top:14px;display:inline-block;}
+
+  /* ===== sample tiles ===== */
+  .samples{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px;}
+  .sample{border:1px solid var(--line);border-radius:8px;padding:22px;background:rgba(255,255,255,.012);cursor:pointer;text-align:left;color:inherit;font-family:inherit;transition:border-color .5s ease,transform .6s var(--ease-heavy),background .4s ease;}
+  .sample:hover{border-color:var(--kraft-deep);transform:translateY(-2px);background:rgba(196,136,90,.05);}
+  .sample.cool:hover{border-color:var(--breath-deep);background:rgba(168,186,184,.05);}
+  .sample .wave{display:flex;align-items:flex-end;gap:3px;height:42px;margin-bottom:16px;}
+  .sample .wave i{flex:1;background:var(--kraft);border-radius:2px;opacity:.55;transition:height .4s ease,opacity .4s ease;}
+  .sample.cool .wave i{background:var(--breath);}
+  .sample.playing .wave i{opacity:.95;}
+  .sample h3{font-family:var(--serif);font-weight:400;font-size:1.16rem;margin:0 0 3px;}
+  .sample .role{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash-dim);}
+  .sample p{font-size:.86rem;color:var(--ash);margin:8px 0 0;}
+
+  /* ===== mini spine demo ===== */
+  .demo{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:38px;align-items:center;}
+  .spine{display:flex;flex-direction:column;gap:6px;position:relative;}
+  .spine::before{content:"";position:absolute;left:24px;top:24px;bottom:24px;width:1px;background:linear-gradient(180deg,transparent,var(--line-strong) 8%,var(--line-strong) 92%,transparent);filter:blur(.4px);}
+  .node{display:flex;align-items:center;gap:18px;background:none;border:0;padding:9px 6px;cursor:pointer;color:inherit;font-family:inherit;text-align:left;border-radius:6px;}
+  .node .bx{flex:0 0 auto;width:38px;height:33px;transform-origin:52% 60%;
+    background:repeating-linear-gradient(13deg,rgba(0,0,0,.14) 0 2px,transparent 2px 7px),linear-gradient(138deg,#8A6240,#664828);
+    filter:drop-shadow(0 2px 3px rgba(0,0,0,.45));transition:transform .85s var(--ease-heavy),filter .7s ease,background .6s ease;}
+  .node:nth-child(1) .bx{clip-path:polygon(6% 11%,92% 4%,96% 90%,10% 95%);}
+  .node:nth-child(2) .bx{clip-path:polygon(4% 7%,90% 10%,95% 88%,8% 96%);}
+  .node:nth-child(3) .bx{clip-path:polygon(9% 8%,95% 5%,89% 93%,5% 87%);}
+  .node:nth-child(4) .bx{clip-path:polygon(5% 13%,87% 6%,97% 85%,13% 93%);}
+  .node:nth-child(5) .bx{clip-path:polygon(11% 5%,93% 13%,87% 91%,6% 85%);}
+  .node:hover .bx{transform:translateX(5px) rotate(-2.4deg) skewX(-2deg) scale(1.06);filter:drop-shadow(0 7px 11px rgba(0,0,0,.55));background:repeating-linear-gradient(13deg,rgba(0,0,0,.12) 0 2px,transparent 2px 7px),linear-gradient(138deg,#C4885A,#9A6539);}
+  .node[aria-current="true"] .bx{transform:translateX(8px) rotate(1.6deg) scale(1.1);background:repeating-linear-gradient(13deg,rgba(0,0,0,.1) 0 2px,transparent 2px 7px),linear-gradient(138deg,#D2965F,#A66B3C);}
+  .node .lab{font-family:var(--serif);font-weight:400;font-size:1.1rem;color:var(--ash);transition:color .6s ease;}
+  .node:hover .lab,.node[aria-current="true"] .lab{color:var(--bone);}
+  .demo .aside{border-left:1px solid var(--line);padding-left:26px;}
+  .demo .aside .hand{font-family:var(--hand);font-size:1.5rem;color:var(--kraft);}
+  .demo .aside p{font-size:.96rem;color:var(--ash);}
+
+  /* ===== mapping table ===== */
+  table{width:100%;border-collapse:collapse;font-size:.92rem;margin-top:34px;}
+  th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);font-weight:400;padding:0 12px 10px;border-bottom:1px solid var(--line-strong);}
+  td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--bone);}
+  td .s{font-family:var(--serif);font-size:1.02rem;}
+  td.t-ash{color:var(--ash);font-size:.88rem;}
+  td .mono{font-size:11px;color:var(--kraft);}
+
+  /* ===== code ===== */
+  pre{margin:30px 0 0;background:#0F0C09;border:1px solid var(--line);border-radius:8px;padding:22px 24px;overflow-x:auto;}
+  code{font-family:var(--mono);font-size:12.5px;line-height:1.85;color:#D9CFBE;}
+  code .c{color:#7E7468;font-style:italic;}
+  code .k{color:#C4885A;}
+  code .f{color:#A8BAB8;}
+
+  /* ===== notes ===== */
+  .notes{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:34px;}
+  .ncard{border:1px solid var(--line);border-radius:6px;padding:22px;}
+  .ncard .ix{font-family:var(--mono);font-size:11px;color:var(--breath);letter-spacing:.1em;}
+  .ncard h3{font-family:var(--serif);font-weight:400;font-size:1.14rem;margin:7px 0 5px;}
+  .ncard p{margin:0;font-size:.92rem;color:var(--ash);}
+
+  footer{padding:40px 0 60px;}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:baseline;}
+  .foot-row .mono{font-size:11px;color:var(--ash-dim);letter-spacing:.1em;}
+
+  @media(max-width:860px){
+    body{font-size:16px;}
+    .samples{grid-template-columns:1fr 1fr;}
+    .demo,.notes{grid-template-columns:1fr;}
+    .pace{margin-left:0;width:100%;}
+  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{transition:none!important;}}
+  :focus-visible{outline:2px solid var(--kraft);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<nav class="pkgnav" aria-label="Package navigation">
+  <a href="index.html">↤ All deliverables</a>
+  <span>SOUND CONCEPT · COMPONENT</span>
+  <a href="06-navigation-spine.html">Navigation Concept ↦</a>
+</nav>
+
+<header>
+  <div class="spot" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="delv">Component · Sound Concept</span>
+    <h1>The room has a <em>sound</em>,<br>and it's almost silence.</h1>
+    <p class="sub">No clicks, no beeps, no UI chimes. The interface speaks in the materials of the stage — <b>the soft drag of a cardboard box</b>, the rustle of a costume, a quiet breath. Sounds are <b>off until you ask for them</b>, gentle by design, and they answer to your pace: linger, and the room responds; rush, and it stays quiet.</p>
+  </div>
+</header>
+
+<!-- A · CONSOLE + LIVE -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">A · Hear it</span>
+    <h2>A live, synthesized sketch.</h2>
+    <p class="lede">These sounds are generated in the browser as stand-ins — in production they become real recordings from the show. Turn sound on, then audition each sample or move through the little spine below.</p>
+
+    <div class="console">
+      <button class="enable" id="enable" data-on="false" aria-pressed="false">Enable sound</button>
+      <div class="vol"><label for="vol">Volume</label><input type="range" id="vol" min="0" max="100" value="55"></div>
+      <div class="pace" aria-hidden="true">
+        <span class="plabel" id="plabel">— still —</span>
+        <div class="meter"><div class="fill" id="pacefill"></div></div>
+      </div>
+    </div>
+    <span class="quiet-note">quiet is the default — sound is a choice the visitor makes</span>
+
+    <div class="samples">
+      <button class="sample" data-snd="drag"><span class="wave"><i style="height:40%"></i><i style="height:65%"></i><i style="height:85%"></i><i style="height:60%"></i><i style="height:45%"></i><i style="height:30%"></i><i style="height:20%"></i></span><span class="role">hover</span><h3>Cardboard drag</h3><p>Filtered brown noise on a slow scrape envelope. The box shifting weight.</p></button>
+      <button class="sample" data-snd="rustle"><span class="wave"><i style="height:30%"></i><i style="height:75%"></i><i style="height:40%"></i><i style="height:80%"></i><i style="height:35%"></i><i style="height:60%"></i><i style="height:25%"></i></span><span class="role">focus · move</span><h3>Costume rustle</h3><p>Grains of high-passed noise, quick decays. Fabric brushing fabric.</p></button>
+      <button class="sample cool" data-snd="breath"><span class="wave"><i style="height:20%"></i><i style="height:45%"></i><i style="height:80%"></i><i style="height:95%"></i><i style="height:70%"></i><i style="height:40%"></i><i style="height:18%"></i></span><span class="role">arrive</span><h3>Breath</h3><p>A soft band of noise, inhale then exhale. Isabela's interiority.</p></button>
+      <button class="sample" data-snd="wood"><span class="wave"><i style="height:95%"></i><i style="height:55%"></i><i style="height:32%"></i><i style="height:22%"></i><i style="height:16%"></i><i style="height:12%"></i><i style="height:9%"></i></span><span class="role">select</span><h3>Wood settle</h3><p>A damped low tone with a soft transient. The chair taking weight.</p></button>
+    </div>
+
+    <div class="demo">
+      <nav class="spine" aria-label="Demo chapters">
+        <button class="node" type="button" aria-current="false"><span class="bx" aria-hidden="true"></span><span class="lab">Diogo</span></button>
+        <button class="node" type="button" aria-current="false"><span class="bx" aria-hidden="true"></span><span class="lab">Isabela</span></button>
+        <button class="node" type="button" aria-current="false"><span class="bx" aria-hidden="true"></span><span class="lab">Process</span></button>
+        <button class="node" type="button" aria-current="false"><span class="bx" aria-hidden="true"></span><span class="lab">Performance</span></button>
+        <button class="node" type="button" aria-current="false"><span class="bx" aria-hidden="true"></span><span class="lab">Post-Dance</span></button>
+      </nav>
+      <div class="aside">
+        <p class="hand">move slowly →</p>
+        <p>Hover a box and it drags; pause between moves and the drag grows fuller. Sweep quickly and the room holds back — fewer sounds, softer. Selecting a chapter lets the wood settle, and Isabela's stop answers with a breath.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- B · MAPPING -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">B · The mapping</span>
+    <h2>Each state, one material.</h2>
+    <table>
+      <thead><tr><th style="width:20%">Interaction</th><th style="width:22%">Sound</th><th style="width:30%">Character</th><th>Made from</th></tr></thead>
+      <tbody>
+        <tr><td><span class="s">Hover a chapter</span></td><td>Cardboard drag</td><td class="t-ash">Low, soft, scraping — fuller the slower you move</td><td><span class="mono">brown noise · bandpass sweep · slow envelope</span></td></tr>
+        <tr><td><span class="s">Focus / keyboard move</span></td><td>Costume rustle</td><td class="t-ash">Brief, granular, weightless</td><td><span class="mono">white noise grains · highpass · fast decay</span></td></tr>
+        <tr><td><span class="s">Arrive at a chapter</span></td><td>Breath</td><td class="t-ash">Inhale–exhale, calm; reserved for Isabela's pole</td><td><span class="mono">band-passed noise · bell envelope</span></td></tr>
+        <tr><td><span class="s">Select / open</span></td><td>Wood settle</td><td class="t-ash">A single damped tone, set down gently</td><td><span class="mono">triangle osc · pitch drop · noise transient</span></td></tr>
+        <tr><td><span class="s">The room, always</span></td><td>Stage bed</td><td class="t-ash">Near-silent low tone — the quiet hall</td><td><span class="mono">looped brown noise · steep lowpass · ~4% gain</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- C · IMPLEMENTATION -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">C · Implementation guide</span>
+    <h2>How it's built.</h2>
+    <p class="lede">One gentle master chain, procedural generators per material, and a pace function that decides how much sound a gesture earns. This is the core of what's running on this page.</p>
+<pre><code><span class="c">// one gentle master chain — low gain, soft top end, a limiter</span>
+master = ctx.<span class="f">createGain</span>();                 master.gain.value = 0;
+<span class="k">const</span> soft = ctx.<span class="f">createBiquadFilter</span>();    soft.type = <span class="k">'lowpass'</span>; soft.frequency.value = 5200;
+<span class="k">const</span> comp = ctx.<span class="f">createDynamicsCompressor</span>(); <span class="c">// keeps everything gentle, never harsh</span>
+master.<span class="f">connect</span>(soft).<span class="f">connect</span>(comp).<span class="f">connect</span>(ctx.destination);
+
+<span class="c">// the soft drag of cardboard — filtered brown noise on a slow scrape</span>
+<span class="k">function</span> <span class="f">drag</span>(slow){
+  <span class="k">const</span> t = ctx.currentTime, src = ctx.<span class="f">createBufferSource</span>();
+  src.buffer = brownNoise; src.loop = <span class="k">true</span>;
+  <span class="k">const</span> bp = ctx.<span class="f">createBiquadFilter</span>(); bp.type = <span class="k">'bandpass'</span>; bp.Q.value = 0.9;
+  bp.frequency.<span class="f">setValueAtTime</span>(280, t);
+  bp.frequency.<span class="f">exponentialRampToValueAtTime</span>(170, t + 0.25 + 0.4*slow); <span class="c">// the scrape</span>
+  <span class="k">const</span> g = ctx.<span class="f">createGain</span>(), dur = 0.18 + 0.5*slow;
+  g.gain.<span class="f">setValueAtTime</span>(0, t);
+  g.gain.<span class="f">linearRampToValueAtTime</span>(0.16*(0.5+0.5*slow), t + 0.04);
+  g.gain.<span class="f">exponentialRampToValueAtTime</span>(0.0008, t + dur);   <span class="c">// settle into silence</span>
+  src.<span class="f">connect</span>(bp).<span class="f">connect</span>(g).<span class="f">connect</span>(master);
+  src.<span class="f">start</span>(t); src.<span class="f">stop</span>(t + dur + 0.05);
+}
+
+<span class="c">// pace: the gap since the last move decides how full the sound is</span>
+<span class="k">function</span> <span class="f">paced</span>(){
+  <span class="k">const</span> now = performance.<span class="f">now</span>(), dt = now - last; last = now;
+  <span class="k">if</span> (dt &lt; 70) <span class="k">return</span>;                       <span class="c">// moving too fast → stay quiet</span>
+  <span class="k">const</span> slow = Math.<span class="f">min</span>(Math.<span class="f">max</span>((dt-90)/900, 0), 1); <span class="c">// rushing → 0, lingering → 1</span>
+  <span class="f">drag</span>(slow);                                  <span class="c">// slower hands get a fuller drag</span>
+}</code></pre>
+    <p class="lede" style="margin-top:22px;">In production, swap the synthesis for real buffers — <span class="mono" style="color:var(--kraft)">ctx.decodeAudioData()</span> on short recordings of the actual box, costume, and breath from the show — keeping the same envelopes, pace logic, and master chain.</p>
+  </div>
+</section>
+
+<!-- D · PRINCIPLES -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">D · Sound principles</span>
+    <h2>Quiet, optional, never the only signal.</h2>
+    <div class="notes">
+      <div class="ncard"><span class="ix">↳ 01</span><h3>Off until asked</h3><p>Nothing plays until the visitor enables sound — browser policy, yes, but also the ethic: silence is the default state of this stage.</p></div>
+      <div class="ncard"><span class="ix">↳ 02</span><h3>Sound never carries meaning alone</h3><p>Every audio cue rides alongside a visible state. A muted visitor misses nothing; the sound is atmosphere, not information.</p></div>
+      <div class="ncard"><span class="ix">↳ 03</span><h3>Answers to pace, refuses clutter</h3><p>Fast, repeated moves are throttled and ducked. The faster you go, the quieter it gets — the opposite of a notification.</p></div>
+      <div class="ncard"><span class="ix">↳ 04</span><h3>Gentle by construction</h3><p>Low gains, a soft lowpass, and a compressor across the master bus. No sharp transients, nothing that could startle.</p></div>
+    </div>
+    <p class="lede" style="margin-top:26px;">A note on wellbeing: some visitors find sudden sound distressing. Beyond the toggle and volume, the concept honours <span class="mono" style="color:var(--breath)">prefers-reduced-motion</span> as a hint to keep audio off until explicitly enabled.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span class="mono">SIBELA &amp; DIGOO · WEB DOC · SOUND CONCEPT</span>
+    <span class="mono">ITI / LARSyS · Dançando com a Diferença</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  let ctx=null, master=null, bedGain=null, brownNoise=null, whiteNoise=null;
+  let enabled=false, last=performance.now(), lastHover=0;
+  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const enableBtn=document.getElementById('enable');
+  const vol=document.getElementById('vol');
+  const pacefill=document.getElementById('pacefill');
+  const plabel=document.getElementById('plabel');
+
+  function volVal(){ return (parseInt(vol.value,10)/100)*0.7; }
+
+  function makeNoise(kind){
+    const len=ctx.sampleRate*2, buf=ctx.createBuffer(1,len,ctx.sampleRate), d=buf.getChannelData(0);
+    if(kind==='brown'){ let lastv=0; for(let i=0;i<len;i++){const w=Math.random()*2-1; lastv=(lastv+0.02*w)/1.02; d[i]=lastv*3.5;} }
+    else { for(let i=0;i<len;i++) d[i]=Math.random()*2-1; }
+    return buf;
+  }
+
+  function initAudio(){
+    if(ctx) return;
+    try{ ctx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return; }
+    master=ctx.createGain(); master.gain.value=0;
+    const soft=ctx.createBiquadFilter(); soft.type='lowpass'; soft.frequency.value=5200; soft.Q.value=0.5;
+    const comp=ctx.createDynamicsCompressor();
+    comp.threshold.value=-24; comp.knee.value=24; comp.ratio.value=4; comp.attack.value=0.02; comp.release.value=0.3;
+    master.connect(soft); soft.connect(comp); comp.connect(ctx.destination);
+    brownNoise=makeNoise('brown'); whiteNoise=makeNoise('white');
+    // quiet stage bed
+    const bed=ctx.createBufferSource(); bed.buffer=brownNoise; bed.loop=true;
+    const bedF=ctx.createBiquadFilter(); bedF.type='lowpass'; bedF.frequency.value=420;
+    bedGain=ctx.createGain(); bedGain.gain.value=0;
+    bed.connect(bedF); bedF.connect(bedGain); bedGain.connect(master); bed.start();
+  }
+
+  function setEnabled(on){
+    enabled=on;
+    enableBtn.dataset.on=on?'true':'false';
+    enableBtn.setAttribute('aria-pressed', on?'true':'false');
+    enableBtn.textContent = on ? 'Sound on — tap to mute' : 'Enable sound';
+    if(!ctx) return;
+    if(ctx.state==='suspended') ctx.resume();
+    const now=ctx.currentTime;
+    master.gain.cancelScheduledValues(now);
+    master.gain.linearRampToValueAtTime(on?volVal():0, now+0.6);
+    bedGain.gain.linearRampToValueAtTime(on?0.04:0, now+1.4);
+  }
+  function ensureOn(){ if(!ctx) initAudio(); if(!enabled) setEnabled(true); }
+
+  // ---- generators ----
+  function drag(slow){
+    const t=ctx.currentTime, src=ctx.createBufferSource(); src.buffer=brownNoise; src.loop=true;
+    const bp=ctx.createBiquadFilter(); bp.type='bandpass'; bp.Q.value=0.9;
+    const f0=255+Math.random()*70; bp.frequency.setValueAtTime(f0,t);
+    bp.frequency.exponentialRampToValueAtTime(f0*0.62, t+0.25+0.4*slow);
+    const lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=1500;
+    const g=ctx.createGain(), dur=0.18+0.5*slow;
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(0.16*(0.5+0.5*slow),t+0.04);
+    g.gain.exponentialRampToValueAtTime(0.0008,t+dur);
+    src.connect(bp); bp.connect(lp); lp.connect(g); g.connect(master);
+    src.start(t); src.stop(t+dur+0.05);
+    src.onended=()=>{src.disconnect();bp.disconnect();lp.disconnect();g.disconnect();};
+  }
+  function rustle(slow){
+    const t=ctx.currentTime, n=3+Math.floor(Math.random()*3);
+    for(let i=0;i<n;i++){
+      const tt=t+i*(0.02+Math.random()*0.03);
+      const src=ctx.createBufferSource(); src.buffer=whiteNoise; src.loop=true;
+      const hp=ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=1600+Math.random()*1200;
+      const g=ctx.createGain();
+      g.gain.setValueAtTime(0,tt);
+      g.gain.linearRampToValueAtTime(0.05*(0.5+0.5*slow),tt+0.006);
+      g.gain.exponentialRampToValueAtTime(0.0005,tt+0.06+Math.random()*0.04);
+      src.connect(hp); hp.connect(g); g.connect(master);
+      src.start(tt); src.stop(tt+0.18);
+      src.onended=()=>{src.disconnect();hp.disconnect();g.disconnect();};
+    }
+  }
+  function breath(){
+    const t=ctx.currentTime, src=ctx.createBufferSource(); src.buffer=whiteNoise; src.loop=true;
+    const bp=ctx.createBiquadFilter(); bp.type='bandpass'; bp.Q.value=0.7;
+    bp.frequency.setValueAtTime(480,t);
+    bp.frequency.linearRampToValueAtTime(900,t+0.5);
+    bp.frequency.linearRampToValueAtTime(420,t+1.1);
+    const g=ctx.createGain();
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.linearRampToValueAtTime(0.06,t+0.45);
+    g.gain.linearRampToValueAtTime(0.05,t+0.62);
+    g.gain.exponentialRampToValueAtTime(0.0006,t+1.2);
+    src.connect(bp); bp.connect(g); g.connect(master);
+    src.start(t); src.stop(t+1.3);
+    src.onended=()=>{src.disconnect();bp.disconnect();g.disconnect();};
+  }
+  function wood(){
+    const t=ctx.currentTime;
+    const o=ctx.createOscillator(); o.type='triangle';
+    o.frequency.setValueAtTime(190,t); o.frequency.exponentialRampToValueAtTime(120,t+0.18);
+    const lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=1200;
+    const g=ctx.createGain();
+    g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.12,t+0.008); g.gain.exponentialRampToValueAtTime(0.0006,t+0.34);
+    o.connect(lp); lp.connect(g); g.connect(master); o.start(t); o.stop(t+0.4);
+    const ns=ctx.createBufferSource(); ns.buffer=whiteNoise;
+    const nh=ctx.createBiquadFilter(); nh.type='bandpass'; nh.frequency.value=900;
+    const ng=ctx.createGain(); ng.gain.setValueAtTime(0.05,t); ng.gain.exponentialRampToValueAtTime(0.0005,t+0.05);
+    ns.connect(nh); nh.connect(ng); ng.connect(master); ns.start(t); ns.stop(t+0.08);
+    o.onended=()=>{o.disconnect();lp.disconnect();g.disconnect();};
+    ns.onended=()=>{ns.disconnect();nh.disconnect();ng.disconnect();};
+    if(bedGain){ const n=ctx.currentTime; bedGain.gain.cancelScheduledValues(n); bedGain.gain.setValueAtTime(0.01,n); bedGain.gain.linearRampToValueAtTime(enabled?0.04:0,n+0.9); }
+  }
+
+  function showPace(dt){
+    const slow=Math.min(Math.max((dt-90)/900,0),1);
+    pacefill.style.width=(8+slow*88)+'%';
+    plabel.textContent = dt<140 ? 'rushing' : (dt<600 ? 'moving' : 'deliberate');
+  }
+
+  // ---- wiring ----
+  enableBtn.addEventListener('click',()=>{ if(!ctx) initAudio(); setEnabled(!enabled); });
+  vol.addEventListener('input',()=>{ if(ctx&&enabled){ master.gain.setTargetAtTime(volVal(), ctx.currentTime, 0.05); } });
+
+  document.querySelectorAll('.sample').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      ensureOn();
+      const k=btn.dataset.snd;
+      ({drag:()=>drag(0.7), rustle:()=>rustle(0.7), breath:breath, wood:wood}[k])();
+      btn.classList.add('playing'); setTimeout(()=>btn.classList.remove('playing'),500);
+    });
+  });
+
+  const nodes=[...document.querySelectorAll('.node')];
+  nodes.forEach((node,i)=>{
+    node.addEventListener('mouseenter',()=>{
+      if(!enabled) return;
+      const now=performance.now(), dt=now-lastHover; lastHover=now;
+      if(dt<70) return;                         // too fast: stay quiet
+      const slow=Math.min(Math.max((dt-90)/900,0),1);
+      drag(slow); if(slow>0.5 && Math.random()<0.5) rustle(slow);
+      showPace(dt);
+    });
+    node.addEventListener('click',()=>{
+      ensureOn();
+      nodes.forEach((n,j)=>n.setAttribute('aria-current', j===i?'true':'false'));
+      wood(); if(i===1) setTimeout(breath,160);   // Isabela's stop breathes
+    });
+    node.addEventListener('keydown',e=>{
+      if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();(nodes[i+1]||nodes[i]).focus();}
+      if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();(nodes[i-1]||nodes[i]).focus();}
+    });
+    node.addEventListener('focus',()=>{ if(enabled) rustle(0.4); });
+  });
+
+  if(reduced){ enableBtn.textContent='Enable sound (reduced-motion: off)'; }
+})();
+</script>
+
+</body>
+</html>

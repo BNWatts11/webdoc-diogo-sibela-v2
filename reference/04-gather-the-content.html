@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Doc · Deliverable 4 — Gather the Content</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1510;--stage-wash:#241D16;--stage-deep:#100C09;--penumbra:#241D16;--penumbra-2:#2C241B;
+    --bone:#ECE4D6;--ash:#9D9389;--ash-dim:#6E655E;
+    --kraft:#C4885A;--kraft-deep:#8C5E38;--breath:#A8BAB8;--breath-deep:#6E8482;
+    --line:rgba(236,228,214,0.13);--line-strong:rgba(236,228,214,0.26);
+    --serif:'Fraunces',Georgia,serif;--sans:'Atkinson Hyperlegible',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;
+    --maxw:1140px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;color:var(--bone);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    background-color:var(--ink);
+    background-image:
+      radial-gradient(125% 90% at 50% -12%, rgba(236,228,214,0.06), transparent 60%),
+      radial-gradient(70% 55% at 16% 28%, rgba(168,186,184,0.05), transparent 62%),
+      radial-gradient(72% 58% at 86% 72%, rgba(196,136,90,0.06), transparent 62%),
+      linear-gradient(176deg, var(--stage-wash) 0%, var(--ink) 42%, var(--stage-deep) 100%);
+    background-attachment:fixed;position:relative;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;
+    opacity:.055;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size:220px 220px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .mono{font-family:var(--mono);}
+  ::selection{background:var(--kraft);color:var(--ink);}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);}
+
+  header{position:relative;padding:74px 0 40px;overflow:hidden;border-bottom:1px solid var(--line);}
+  .spot{position:absolute;inset:0;z-index:0;background:radial-gradient(80% 70% at 50% -20%,rgba(236,228,214,.10),transparent 55%),radial-gradient(50% 60% at 80% 50%,rgba(196,136,90,.10),transparent 60%);pointer-events:none;}
+  header .wrap{position:relative;z-index:1;}
+  .delv{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--kraft);border:1px solid var(--kraft-deep);border-radius:99px;padding:5px 13px;margin-bottom:26px;}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(2.6rem,7vw,5rem);line-height:.98;letter-spacing:-.02em;margin:0 0 14px;}
+  h1 em{font-style:italic;}
+  .sub{font-size:1.2rem;color:var(--ash);max-width:62ch;margin:0;}
+  .sub b{color:var(--bone);font-weight:700;}
+
+  /* tally */
+  .tally{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px;}
+  .tcard{flex:1 1 160px;border:1px solid var(--line);border-radius:4px;padding:18px 20px;background:rgba(255,255,255,.015);}
+  .tcard .n{font-family:var(--serif);font-weight:300;font-size:2.6rem;line-height:1;}
+  .tcard .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);margin-top:6px;}
+  .tcard.have .n{color:var(--breath);}
+  .tcard.shoot .n{color:var(--kraft);}
+  .tcard.source .n{color:var(--bone);}
+
+  section{padding:58px 0;border-bottom:1px solid var(--line);}
+  h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.7rem,3.6vw,2.4rem);line-height:1.05;margin:0 0 8px;letter-spacing:-.01em;}
+  .lede{font-size:1.1rem;color:var(--ash);max-width:64ch;margin:0 0 8px;}
+
+  .legend{display:flex;gap:20px;flex-wrap:wrap;margin:30px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ash);}
+  .legend span{display:flex;align-items:center;gap:8px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:block;}
+  .i-have{background:var(--breath);}.i-shoot{background:var(--kraft);}.i-source{background:var(--ash-dim);}
+
+  .hub{margin-top:30px;}
+  .hub-h{display:flex;align-items:center;gap:11px;margin-bottom:6px;}
+  .hub-h::before{content:"";width:9px;height:9px;border-radius:99px;background:var(--kraft);flex-shrink:0;}
+  .hub-h.cool::before{background:var(--breath);}
+  .hub-h h3{font-family:var(--serif);font-weight:400;font-size:1.35rem;margin:0;letter-spacing:-.01em;}
+  .hub-h .map{font-family:var(--mono);font-size:10px;color:var(--ash-dim);letter-spacing:.06em;text-transform:uppercase;margin-left:auto;}
+
+  table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px;}
+  th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);font-weight:400;padding:0 12px 9px;border-bottom:1px solid var(--line-strong);}
+  td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  td .code{font-family:var(--mono);font-size:10.5px;color:var(--kraft);letter-spacing:.01em;display:block;margin-bottom:2px;}
+  td .ttl{color:var(--bone);}
+  td.t-type{color:var(--ash);font-size:.84rem;}
+  .st{font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:99px;white-space:nowrap;display:inline-block;}
+  .st.have{color:var(--breath);border:1px solid var(--breath-deep);}
+  .st.shoot{color:var(--kraft);border:1px solid var(--kraft-deep);}
+  .st.source{color:var(--ash);border:1px solid var(--line-strong);}
+
+  .convention{border:1px solid var(--line);border-radius:5px;padding:26px;margin-top:8px;background:rgba(255,255,255,.015);}
+  .convention h3{font-family:var(--serif);font-weight:400;font-size:1.3rem;margin:0 0 4px;}
+  .ex{font-family:var(--mono);font-size:.86rem;color:var(--bone);background:var(--ink);border:1px solid var(--line);border-radius:4px;padding:14px 16px;margin:16px 0;overflow-x:auto;line-height:1.9;}
+  .ex .hl{color:var(--kraft);}.ex .hl2{color:var(--breath);}
+  .convention p{color:var(--ash);font-size:.9rem;margin:0;max-width:74ch;}
+  .convention .mono-b{color:var(--bone);}
+  .folder{font-family:var(--mono);font-size:.82rem;color:var(--ash);line-height:1.95;margin-top:16px;border-top:1px solid var(--line);padding-top:16px;}
+  .folder b{color:var(--bone);}
+
+  footer{padding:40px 0 60px;}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:baseline;}
+  .foot-row .mono{font-size:11px;color:var(--ash-dim);letter-spacing:.1em;}
+
+  @media(max-width:860px){
+    body{font-size:16px;}
+    table,thead,tbody,th,td,tr{display:block;}
+    thead{display:none;}
+    tr{border:1px solid var(--line);border-radius:4px;margin-bottom:10px;padding:6px 10px;}
+    td{border-bottom:1px solid var(--line);padding:8px 4px;}
+    td:last-child{border-bottom:none;}
+    td::before{content:attr(data-l);font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash-dim);display:block;margin-bottom:3px;}
+    .hub-h .map{display:none;}
+  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{transition:none!important;}}
+  :focus-visible{outline:2px solid var(--kraft);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<nav aria-label="Package navigation" style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 28px;border-bottom:1px solid var(--line);background:var(--penumbra-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;flex-wrap:wrap;">
+  <a href="index.html" style="color:var(--kraft);text-decoration:none;white-space:nowrap;">↤ All deliverables</a>
+  <span style="color:var(--ash);">PLANNING DOCUMENT 4 OF 5 <span style="color:var(--ash-dim);">(not the web doc's navigation)</span></span>
+  <span><a href="03-website-structure.html" style="color:var(--kraft);text-decoration:none;white-space:nowrap;">↤ Prev</a> &nbsp; <a href="05-reference-sites.html" style="color:var(--kraft);text-decoration:none;white-space:nowrap;">Next ↦</a></span>
+</nav>
+
+<header>
+  <div class="spot" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="delv">Deliverable 4 / 5 · Gather the Content</span>
+    <h1>Every asset,<br>catalogued <em>before</em> the build.</h1>
+    <p class="sub"><b>The Gathering</b> — every material the piece needs, grouped by section, with a status on each: what you <b>have in hand</b>, what is <b>still to capture</b>, and what is <b>still to gather</b>. A naming convention and folder tree keep it findable across the team.</p>
+
+    <div class="tally">
+      <div class="tcard have"><div class="n">8</div><div class="l">In hand</div></div>
+      <div class="tcard shoot"><div class="n">17</div><div class="l">Still to capture</div></div>
+      <div class="tcard source"><div class="n">5</div><div class="l">Still to gather</div></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="legend">
+      <span><i class="i-have"></i> In hand · have</span>
+      <span><i class="i-shoot"></i> Still to capture · shoot</span>
+      <span><i class="i-source"></i> Still to gather · source</span>
+    </div>
+
+    <!-- CONTEXT -->
+    <div class="hub">
+      <div class="hub-h"><h3>Inclusive Dance · Summary · Company · Tânia Carvalho</h3><span class="map">sections 01–04</span></div>
+      <table>
+        <thead><tr><th style="width:38%">Asset</th><th style="width:15%">Type</th><th style="width:24%">Source / owner</th><th style="width:11%">Format</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td data-l="Asset"><span class="code">IDWD_CONCEPT_summary</span><span class="ttl">Inclusive-dance conceptual text + summary</span></td><td data-l="Type" class="t-type">Text</td><td data-l="Source">Bernardo / thesis</td><td data-l="Format" class="t-type">MD</td><td data-l="Status"><span class="st have">have</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_DCD_profile</span><span class="ttl">Company mission &amp; Invisibility Cycle</span></td><td data-l="Type" class="t-type">Text + photo</td><td data-l="Source">Dançando com a Diferença</td><td data-l="Format" class="t-type">MD / JPG</td><td data-l="Status"><span class="st source">source</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_DCD_broll</span><span class="ttl">Company / studio b-roll</span></td><td data-l="Type" class="t-type">Video</td><td data-l="Source">To record at studio</td><td data-l="Format" class="t-type">MP4 4K</td><td data-l="Status"><span class="st shoot">shoot</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_TANIA_bio</span><span class="ttl">Biography &amp; works timeline</span></td><td data-l="Type" class="t-type">Text</td><td data-l="Source">Pesquisa doc (drafted)</td><td data-l="Format" class="t-type">MD</td><td data-l="Status"><span class="st have">have</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_TANIA_essence</span><span class="ttl">Two conceptual texts (performance / essence)</span></td><td data-l="Type" class="t-type">Text</td><td data-l="Source">Context doc (drafted)</td><td data-l="Format" class="t-type">MD</td><td data-l="Status"><span class="st have">have</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_TANIA_interview</span><span class="ttl">Choreographer interview</span></td><td data-l="Type" class="t-type">Video + audio</td><td data-l="Source">To record</td><td data-l="Format" class="t-type">MP4 / WAV</td><td data-l="Status"><span class="st shoot">shoot</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- DIOGO -->
+    <div class="hub">
+      <div class="hub-h"><h3>Diogo — Digoo</h3><span class="map">section 05</span></div>
+      <table>
+        <thead><tr><th style="width:38%">Asset</th><th style="width:15%">Type</th><th style="width:24%">Source / owner</th><th style="width:11%">Format</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td data-l="Asset"><span class="code">IDWD_DIGOO_portrait</span><span class="ttl">Who is he? — first-person</span></td><td data-l="Type" class="t-type">Video + audio</td><td data-l="Source">To record with Diogo</td><td data-l="Format" class="t-type">MP4 / WAV</td><td data-l="Status"><span class="st shoot">shoot</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_DIGOO_solo_master</span><span class="ttl">Full solo (boxes)</span></td><td data-l="Type" class="t-type">Video</td><td data-l="Source">Performance capture</td><td data-l="Format" class="t-type">MP4 4K</td><td data-l="Status"><span class="st shoot">shoot</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_DIGOO_solo_audio</span><span class="ttl">Solo sound stems</span></td><td data-l="Type" class="t-type">Audio</td><td data-l="Source">DcD sound dept.</td><td data-l="Format" class="t-type">WAV</td><td data-l="Status"><span class="st source">source</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_DIGOO_interview</span><span class="ttl">Interview (optional)</span></td><td data-l="Type" class="t-type">Video</td><td data-l="Source">To record</td><td data-l="Format" class="t-type">MP4</td><td data-l="Status"><span class="st shoot">shoot</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ISABELA -->
+    <div class="hub">
+      <div class="hub-h cool"><h3>Isabela — Sibela</h3><span class="map">section 06</span></div>
+      <table>
+        <thead><tr><th style="width:38%">Asset</th><th style="width:15%">Type</th><th style="width:24%">Source / owner</th><th style="width:11%">Format</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td data-l="Asset"><span class="code">IDWD_SIBELA_portrait</span><span class="ttl">Who is she? — first-person</span></td><td data-l="Type" class="t-type">Video + audio</td><td data-l="Source">To record with Isabela</td><td data-l="Format" class="t-type">MP4 / WAV</td><td data-l="Status"><span class="st shoot">shoot</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_SIBELA_solo_master</span><span class="ttl">Full solo (interiority)</span></td><td data-l="Type" class="t-type">Video</td><td data-l="Source">Performance capture</td><td data-l="Format" class="t-type">MP4 4K</td><td data-l="Status"><span class="st shoot">shoot</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_SIBELA_solo_audio</span><span class="ttl">Solo sound stems</span></td><td data-l="Type" class="t-type">Audio</td><td data-l="Source">DcD sound dept.</td><td data-l="Format" class="t-type">WAV</td><td data-l="Status"><span class="st source">source</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_SIBELA_interview</span><span class="ttl">Interview (optional)</span></td><td data-l="Type" class="t-type">Video</td><td data-l="Source">To record</td><td data-l="Format" class="t-type">MP4</td><td data-l="Status"><span class="st shoot">shoot</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PROCESS -->
+    <div class="hub">
+      <div class="hub-h"><h3>Preparation / Process — incl. both storyboards</h3><span class="map">section 07</span></div>
+      <table>
+        <thead><tr><th style="width:38%">Asset</th><th style="width:15%">Type</th><th style="width:24%">Source / owner</th><th style="width:11%">Format</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td data-l="Asset"><span class="code">IDWD_PROCESS_notes</span><span class="ttl">Consolidated rehearsal report I &amp; II</span></td><td data-l="Type" class="t-type">Text</td><td data-l="Source">Ethnographic notes (drafted)</td><td data-l="Format" class="t-type">MD</td><td data-l="Status"><span class="st have">have</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_PROCESS_rehearsal_video</span><span class="ttl">Rehearsal-room footage</span></td><td data-l="Type" class="t-type">Video</td><td data-l="Source">To record / archive</td><td data-l="Format" class="t-type">MP4</td><td data-l="Status"><span class="st shoot">shoot</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_SB_vr_p1-6</span><span class="ttl">VR storyboard (Inner Flow · Isabela), 6 panels</span></td><td data-l="Type" class="t-type">Text + frames</td><td data-l="Source">Storyboard doc</td><td data-l="Format" class="t-type">MD / PNG</td><td data-l="Status"><span class="st have">have</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_SB_proj_p1-6</span><span class="ttl">Projection storyboard (Kinetic Boxes · Diogo), 6 panels</span></td><td data-l="Type" class="t-type">Text + frames</td><td data-l="Source">Storyboard doc</td><td data-l="Format" class="t-type">MD / PNG</td><td data-l="Status"><span class="st have">have</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_SB_frames_hires</span><span class="ttl">Clean storyboard illustrations for web</span></td><td data-l="Type" class="t-type">Image</td><td data-l="Source">To redraw</td><td data-l="Format" class="t-type">SVG / PNG</td><td data-l="Status"><span class="st shoot">make</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PERFORMANCE + POST-DANCE -->
+    <div class="hub">
+      <div class="hub-h"><h3>Performance &amp; Post-Dance — timeline, boxes, chair</h3><span class="map">sections 08–09</span></div>
+      <table>
+        <thead><tr><th style="width:38%">Asset</th><th style="width:15%">Type</th><th style="width:24%">Source / owner</th><th style="width:11%">Format</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td data-l="Asset"><span class="code">IDWD_PERF_master</span><span class="ttl">Full two-act performance capture</span></td><td data-l="Type" class="t-type">Video</td><td data-l="Source">Performance capture</td><td data-l="Format" class="t-type">MP4 4K</td><td data-l="Status"><span class="st shoot">shoot</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_PERF_timeline_map</span><span class="ttl">Cue sheet → timeline markers + quality lanes</span></td><td data-l="Type" class="t-type">Data</td><td data-l="Source">Author from notes</td><td data-l="Format" class="t-type">JSON</td><td data-l="Status"><span class="st shoot">build</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_OBJ_boxes_360</span><span class="ttl">Diogo's boxes — object photography / scan</span></td><td data-l="Type" class="t-type">Image / 3D</td><td data-l="Source">To shoot (turntable)</td><td data-l="Format" class="t-type">PNG / GLB</td><td data-l="Status"><span class="st shoot">shoot</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_OBJ_chair_360</span><span class="ttl">The chair (Isabela's solo) — object photography / scan</span></td><td data-l="Type" class="t-type">Image / 3D</td><td data-l="Source">To shoot (turntable)</td><td data-l="Format" class="t-type">PNG / GLB</td><td data-l="Status"><span class="st shoot">shoot</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_POST_install_doc</span><span class="ttl">VR + projection installation documentation</span></td><td data-l="Type" class="t-type">Video + photo</td><td data-l="Source">To record at install</td><td data-l="Format" class="t-type">MP4 / JPG</td><td data-l="Status"><span class="st shoot">shoot</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_POST_collective_map</span><span class="ttl">Audience box-compositions (“Final Map”)</span></td><td data-l="Type" class="t-type">Image / data</td><td data-l="Source">Generated in-experience</td><td data-l="Format" class="t-type">PNG / JSON</td><td data-l="Status"><span class="st source">design</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SITEWIDE -->
+    <div class="hub">
+      <div class="hub-h cool"><h3>Site-wide — identity &amp; accessibility</h3><span class="map">all pages</span></div>
+      <table>
+        <thead><tr><th style="width:38%">Asset</th><th style="width:15%">Type</th><th style="width:24%">Source / owner</th><th style="width:11%">Format</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td data-l="Asset"><span class="code">IDWD_BRAND_wordmark</span><span class="ttl">Title lockup &amp; favicon</span></td><td data-l="Type" class="t-type">Vector</td><td data-l="Source">To design</td><td data-l="Format" class="t-type">SVG</td><td data-l="Status"><span class="st shoot">make</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_A11Y_transcripts</span><span class="ttl">Transcripts for all audio/video</span></td><td data-l="Type" class="t-type">Text</td><td data-l="Source">To transcribe</td><td data-l="Format" class="t-type">VTT / MD</td><td data-l="Status"><span class="st shoot">make</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_A11Y_captions</span><span class="ttl">Captions (PT + EN)</span></td><td data-l="Type" class="t-type">Text</td><td data-l="Source">To caption</td><td data-l="Format" class="t-type">VTT</td><td data-l="Status"><span class="st shoot">make</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_A11Y_audiodesc</span><span class="ttl">Audio description tracks</span></td><td data-l="Type" class="t-type">Audio</td><td data-l="Source">To record</td><td data-l="Format" class="t-type">WAV</td><td data-l="Status"><span class="st shoot">make</span></td></tr>
+          <tr><td data-l="Asset"><span class="code">IDWD_LEGAL_releases</span><span class="ttl">Dancer / music / image releases</span></td><td data-l="Type" class="t-type">Docs</td><td data-l="Source">DcD + performers</td><td data-l="Format" class="t-type">PDF</td><td data-l="Status"><span class="st source">clear</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONVENTION -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Naming convention &amp; folders</span>
+    <h2>One rule, so nothing gets lost.</h2>
+    <div class="convention">
+      <h3>File naming</h3>
+      <div class="ex">
+<span class="hl">IDWD</span>_<span class="hl2">[SECTION]</span>_[type]_[slug]_v[NN].[ext]<br>
+&nbsp;&nbsp;IDWD_DIGOO_solo_boxes_master_v01.mp4<br>
+&nbsp;&nbsp;IDWD_SIBELA_portrait_intro_v02.mp4<br>
+&nbsp;&nbsp;IDWD_OBJ_chair_360_v01.glb
+      </div>
+      <p>Section codes — <span class="mono-b">CONCEPT · DCD · TANIA · DIGOO · SIBELA · PROCESS · SB · PERF · OBJ · POST · A11Y · BRAND · LEGAL</span>. Version numbers always two digits. Master files keep their original name forever; only copies get re-versioned.</p>
+
+      <div class="folder">
+        <b>/assets/</b> &nbsp;— one folder per section code (masters, untouched)<br>
+        &nbsp;&nbsp;├─ /concept/ &nbsp;/dcd/ &nbsp;/tania/ &nbsp;/digoo/ &nbsp;/sibela/<br>
+        &nbsp;&nbsp;├─ /process/ &nbsp;/perf/ &nbsp;/obj/ &nbsp;/post/<br>
+        &nbsp;&nbsp;└─ /a11y/ &nbsp;/brand/ &nbsp;/legal/<br>
+        <b>/exports/</b> — web-optimised copies (the only folder the build reads)<br>
+        <b>/transcripts/</b> — captions, transcripts, audio-description scripts
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span class="mono">SIBELA &amp; DIGOO · WEB DOC · DELIVERABLE 4 / 5 — GATHER THE CONTENT</span>
+    <span class="mono">ITI / LARSyS · Dançando com a Diferença</span>
+  </div>
+</footer>
+
+</body>
+</html>

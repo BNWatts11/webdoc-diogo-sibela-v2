@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Doc · Deliverable 2 — Mood Board (Art Direction)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1510;--stage-wash:#241D16;--stage-deep:#100C09;--penumbra:#241D16;--penumbra-2:#2C241B;
+    --bone:#ECE4D6;--ash:#9D9389;--ash-dim:#6E655E;
+    --kraft:#C4885A;--kraft-deep:#8C5E38;--breath:#A8BAB8;--breath-deep:#6E8482;
+    --charcoal:#211D19;--graphite:#4A443D;--newsprint:#E7DFCE;--wood:#7A5230;--wood-deep:#523A22;
+    --line:rgba(236,228,214,0.13);--line-strong:rgba(236,228,214,0.26);
+    --serif:'Fraunces',Georgia,serif;--sans:'Atkinson Hyperlegible',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;--hand:'Caveat',cursive;
+    --maxw:1140px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;color:var(--bone);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    background-color:var(--ink);
+    background-image:
+      radial-gradient(125% 90% at 50% -12%, rgba(236,228,214,0.06), transparent 60%),
+      radial-gradient(70% 55% at 16% 28%, rgba(168,186,184,0.05), transparent 62%),
+      radial-gradient(72% 58% at 86% 72%, rgba(196,136,90,0.06), transparent 62%),
+      linear-gradient(176deg, var(--stage-wash) 0%, var(--ink) 42%, var(--stage-deep) 100%);
+    background-attachment:fixed;position:relative;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.055;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size:220px 220px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .mono{font-family:var(--mono);}
+  ::selection{background:var(--kraft);color:var(--ink);}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);}
+
+  .pkgnav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 28px;border-bottom:1px solid var(--line);background:var(--penumbra-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;flex-wrap:wrap;}
+  .pkgnav a{color:var(--kraft);text-decoration:none;white-space:nowrap;}
+  .pkgnav span{color:var(--ash);}
+
+  header{position:relative;padding:64px 0 36px;overflow:hidden;border-bottom:1px solid var(--line);}
+  .spot{position:absolute;inset:0;z-index:0;background:radial-gradient(60% 70% at 72% 10%,rgba(196,136,90,.14),transparent 60%),radial-gradient(50% 60% at 20% 60%,rgba(168,186,184,.07),transparent 60%);pointer-events:none;}
+  header .wrap{position:relative;z-index:1;}
+  .delv{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--kraft);border:1px solid var(--kraft-deep);border-radius:99px;padding:5px 13px;margin-bottom:24px;}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(2.5rem,6.6vw,4.8rem);line-height:.99;letter-spacing:-.02em;margin:0 0 16px;}
+  h1 em{font-style:italic;}
+  .sub{font-size:1.18rem;color:var(--ash);max-width:60ch;margin:0;}
+  .sub b{color:var(--bone);font-weight:700;}
+  .scrawl{font-family:var(--hand);font-size:1.7rem;color:var(--kraft);transform:rotate(-3deg);display:inline-block;}
+
+  section{padding:58px 0;border-bottom:1px solid var(--line);}
+  h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.7rem,3.6vw,2.5rem);line-height:1.05;margin:0 0 8px;letter-spacing:-.01em;}
+  .lede{font-size:1.1rem;color:var(--ash);max-width:64ch;margin:0 0 8px;}
+
+  /* ===== reject / embrace ===== */
+  .stance{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:36px;}
+  .stance .col{border:1px solid var(--line);border-radius:6px;padding:24px 26px;}
+  .stance .no{border-color:rgba(236,228,214,.1);background:rgba(255,255,255,.012);}
+  .stance .yes{border-color:var(--kraft-deep);background:rgba(196,136,90,.05);}
+  .stance h3{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin:0 0 14px;}
+  .stance .no h3{color:var(--ash-dim);}
+  .stance .yes h3{color:var(--kraft);}
+  .stance ul{list-style:none;margin:0;padding:0;}
+  .stance li{padding:8px 0;border-bottom:1px solid var(--line);font-size:.96rem;color:var(--ash);}
+  .stance li:last-child{border-bottom:none;}
+  .stance .yes li{color:var(--bone);}
+  .stance li b{color:var(--bone);}
+
+  /* ===== charcoal object studies (sketchbook plates) ===== */
+  .plates{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:40px;}
+  .plate{
+    position:relative;background:var(--newsprint);border-radius:2px;padding:22px 22px 18px;
+    box-shadow:0 18px 40px -18px rgba(0,0,0,.8), 0 2px 6px rgba(0,0,0,.4);
+  }
+  .plate:nth-child(1){transform:rotate(-1.1deg);}
+  .plate:nth-child(2){transform:rotate(1deg);}
+  .plate::before{ /* a strip of tape, top-left */
+    content:"";position:absolute;top:-9px;left:24px;width:74px;height:20px;
+    background:rgba(214,200,168,.55);transform:rotate(-4deg);
+    box-shadow:0 1px 2px rgba(0,0,0,.25);
+  }
+  .plate svg{display:block;width:100%;height:230px;}
+  .plate .cap{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#6a6052;margin-top:8px;}
+  .plate .hand{font-family:var(--hand);font-size:1.5rem;color:#3a342c;position:absolute;}
+  .plate .hand.h1{right:24px;top:30px;transform:rotate(5deg);}
+  .plate .hand.h2{right:28px;bottom:46px;transform:rotate(-4deg);}
+
+  /* ===== macro material plates ===== */
+  .macros{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:38px;}
+  .macro{position:relative;border-radius:3px;overflow:hidden;border:5px solid #ECE6D6;box-shadow:0 14px 30px -16px rgba(0,0,0,.85);}
+  .macro .img{height:165px;position:relative;}
+  .macro .tape{position:absolute;top:-7px;right:18px;width:54px;height:18px;background:rgba(236,230,214,.5);transform:rotate(6deg);z-index:3;}
+  .macro figcaption{background:#ECE6D6;color:#3a342c;padding:10px 12px;}
+  .macro .t{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7a2f12;display:block;}
+  .macro .d{font-size:.82rem;color:#5a5147;line-height:1.4;display:block;margin-top:3px;}
+  /* material textures (stand-ins / shot direction) */
+  .m-edge{background:linear-gradient(180deg,#c9a074,#a9794b 70%,#8a5f38);}
+  .m-edge::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34px;background:repeating-linear-gradient(90deg,rgba(60,38,18,.55) 0 2px,rgba(201,160,116,0) 2px 9px);}
+  .m-tape{background:linear-gradient(135deg,#bb8a5b,#9a6c41);}
+  .m-tape::after{content:"";position:absolute;inset:0;background:linear-gradient(118deg,transparent 30%,rgba(255,250,235,.18) 38%,rgba(255,250,235,.05) 52%,transparent 60%);}
+  .m-crease{background:linear-gradient(110deg,#c49a6c 0 47%,#7c5532 49%,#caa074 51%);}
+  .m-grain{background:linear-gradient(100deg,#7a5230,#5f3f26);}
+  .m-grain::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(91deg,rgba(0,0,0,.16) 0 1px,transparent 1px 5px),repeating-linear-gradient(89deg,rgba(255,220,180,.05) 0 2px,transparent 2px 11px);}
+  .m-joint{background:radial-gradient(40% 60% at 62% 45%,#4A331F,#6b4a2e 60%,#7a5230);}
+  .m-joint::after{content:"";position:absolute;top:42%;left:58%;width:14px;height:14px;border-radius:99px;background:radial-gradient(circle at 40% 35%,#cdbfae,#5a5045);box-shadow:0 1px 3px rgba(0,0,0,.6);}
+  .m-scuff{background:radial-gradient(30% 50% at 20% 30%,#8a6240,transparent 60%),radial-gradient(40% 60% at 80% 70%,#5f3f26,transparent 55%),linear-gradient(120deg,#73502f,#9a6c41);}
+  .macro .img::before{ /* hard raking light to read friction/weight */
+    content:"";position:absolute;inset:0;z-index:2;
+    background:linear-gradient(105deg,rgba(255,244,225,.22),transparent 40%),linear-gradient(285deg,rgba(0,0,0,.5),transparent 45%);
+  }
+
+  /* ===== light & shadow ===== */
+  .shadows{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:38px;}
+  .shadowcard{position:relative;height:280px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:radial-gradient(80% 70% at 30% 0%,#2a2018,#0d0a07 75%);}
+  .shadowcard .obj{position:absolute;bottom:64px;left:50%;transform:translateX(-60%);}
+  .shadowcard .cast{position:absolute;bottom:60px;left:46%;width:240px;height:34px;background:radial-gradient(closest-side,rgba(0,0,0,.85),transparent 75%);transform:skewX(58deg) scaleY(.9);filter:blur(3px);}
+  .shadowcard .lbl{position:absolute;top:14px;left:16px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);z-index:3;}
+  .boxsil{width:96px;height:84px;background:linear-gradient(100deg,#d7a877 0 18%,#9a6c41 19%,#6b4a2e);clip-path:polygon(8% 14%,90% 5%,96% 88%,12% 95%);box-shadow:-2px 0 0 rgba(0,0,0,.3);}
+  .chairsil{width:70px;height:120px;position:relative;}
+
+  /* ===== palette ===== */
+  .swatches{display:grid;grid-template-columns:repeat(8,1fr);gap:9px;margin-top:38px;}
+  .sw{border-radius:4px;height:120px;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:flex-end;padding:11px;}
+  .sw .nm{font-family:var(--mono);font-size:10px;letter-spacing:.02em;}
+  .sw .hx{font-family:var(--mono);font-size:9px;opacity:.7;}
+  .palnote{margin-top:20px;font-size:.94rem;color:var(--ash);max-width:74ch;}
+  .palnote b{color:var(--bone);}
+
+  /* ===== typography ===== */
+  .type-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;margin-top:38px;}
+  .type-card{border:1px solid var(--line);border-radius:6px;padding:28px;position:relative;}
+  .type-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--kraft);margin-bottom:12px;}
+  .specimen .ed{font-family:var(--serif);font-weight:300;font-size:clamp(2.2rem,4.6vw,3.4rem);line-height:1;letter-spacing:-.02em;margin:0;}
+  .specimen .ed em{font-style:italic;}
+  .specimen .annot{font-family:var(--hand);font-size:1.7rem;color:var(--kraft);transform:rotate(-3deg);display:inline-block;margin:6px 0 0;}
+  .specimen .body{font-family:var(--sans);font-size:1rem;color:var(--bone);margin:18px 0 0;max-width:48ch;}
+  .specimen .cap{font-family:var(--mono);font-size:.78rem;color:var(--ash);letter-spacing:.04em;margin-top:14px;}
+  .pairing{list-style:none;margin:0;padding:0;}
+  .pairing li{padding:13px 0;border-bottom:1px solid var(--line);}
+  .pairing li:last-child{border-bottom:none;}
+  .pairing .role{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash-dim);display:block;margin-bottom:3px;}
+  .pairing .face{font-size:1.05rem;color:var(--bone);}
+  .pairing .face b{font-weight:700;}
+  .pairing .face span{color:var(--ash);font-size:.9rem;}
+  .a11y-note{margin-top:18px;border-top:1px solid var(--line);padding-top:14px;font-size:.9rem;color:var(--breath);}
+  .a11y-note b{color:var(--bone);}
+
+  /* ===== layout description ===== */
+  .layout{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:36px;}
+  .lcard{border:1px solid var(--line);border-radius:5px;padding:22px;}
+  .lcard .n{font-family:var(--mono);font-size:11px;color:var(--kraft);letter-spacing:.12em;}
+  .lcard h3{font-family:var(--serif);font-weight:400;font-size:1.16rem;margin:8px 0 5px;}
+  .lcard p{margin:0;font-size:.92rem;color:var(--ash);}
+
+  /* ===== titles ===== */
+  .titles{margin-top:36px;}
+  .title-opt{display:flex;gap:18px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+  .title-opt .t{font-family:var(--serif);font-weight:300;font-size:1.7rem;letter-spacing:-.01em;}
+  .title-opt .t em{font-style:italic;}
+  .title-opt .note{font-size:.9rem;color:var(--ash);max-width:46ch;}
+  .title-opt .badge{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--kraft);border:1px solid var(--line-strong);border-radius:99px;padding:3px 9px;}
+
+  footer{padding:40px 0 60px;}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:baseline;}
+  .foot-row .mono{font-size:11px;color:var(--ash-dim);letter-spacing:.1em;}
+
+  @media(max-width:860px){
+    body{font-size:16px;}
+    .stance,.plates,.shadows,.type-wrap,.layout{grid-template-columns:1fr;}
+    .macros{grid-template-columns:1fr 1fr;}
+    .swatches{grid-template-columns:repeat(4,1fr);}
+  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{transition:none!important;}}
+  :focus-visible{outline:2px solid var(--kraft);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<nav class="pkgnav" aria-label="Package navigation">
+  <a href="index.html">↤ All deliverables</a>
+  <span>PLANNING DOCUMENT 2 OF 5 <span style="color:var(--ash-dim);">(not the web doc's navigation)</span></span>
+  <span><a href="01-structure-mockup.html">↤ Prev</a> &nbsp; <a href="03-website-structure.html">Next ↦</a></span>
+</nav>
+
+<header>
+  <div class="spot" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="delv">Deliverable 2 / 5 · Mood Board — Art Direction</span>
+    <h1>The objects, in<br>charcoal and <em>grain</em>.</h1>
+    <p class="sub">This web doc is about two things left on a stage — <b>cardboard boxes</b> and <b>a wooden chair</b>. The look has to feel touched, not rendered: <span class="scrawl">raw, weighted, made by hand.</span> No slick vectors, no flat fills. Charcoal, graphite, raking light, and macro photographs of real material under stress.</p>
+  </div>
+</header>
+
+<!-- A · STANCE -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">A · The aesthetic stance</span>
+    <h2>What we reject, what we reach for.</h2>
+    <div class="stance">
+      <div class="col no">
+        <h3>✕ Not this</h3>
+        <ul>
+          <li>Slick, vector-perfect illustration</li>
+          <li>Flat fills and clean geometric icons</li>
+          <li>Even, ambient studio lighting</li>
+          <li>Glossy 3D renders of objects</li>
+          <li>Stock photography, drop-shadow gloss</li>
+          <li>Anything that looks generated by a template</li>
+        </ul>
+      </div>
+      <div class="col yes">
+        <h3>◆ This</h3>
+        <ul>
+          <li><b>Raw charcoal sketches</b> — visible hand, broken line</li>
+          <li><b>Graphite texture</b> — smudge, tooth, paper grain</li>
+          <li><b>High-contrast spotlight shadows</b> — one hard source</li>
+          <li><b>Macro photographs</b> of cardboard and wood under load</li>
+          <li>Friction and weight you can almost feel</li>
+          <li>Sketchbook plates pinned to a dark stage</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- B · CHARCOAL STUDIES -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">B · Charcoal object studies</span>
+    <h2>Draw them before you photograph them.</h2>
+    <p class="lede">The two protagonists, rendered as loose charcoal studies on newsprint — broken, doubled lines, never closed vector paths. These set the drawing language for section dividers and chapter openers.</p>
+
+    <div class="plates">
+      <figure class="plate">
+        <span class="hand h1">weight ↓</span>
+        <svg viewBox="0 0 240 200" role="img" aria-label="Charcoal study of a cardboard box">
+          <defs><filter id="ch1" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="7" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="6"/>
+          </filter></defs>
+          <g id="boxs" fill="none" stroke="#241f1a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#ch1)">
+            <path d="M52,74 L120,54 L196,76 L128,98 Z"/>
+            <path d="M52,74 L58,150"/><path d="M128,98 L136,176"/><path d="M196,76 L200,150"/>
+            <path d="M58,150 L136,176"/><path d="M136,176 L200,150"/>
+            <path d="M52,74 L40,48"/><path d="M120,54 L120,28"/><path d="M196,76 L214,52"/>
+            <path d="M120,54 L130,74" opacity=".5"/>
+          </g>
+          <use href="#boxs" transform="translate(2.4,2.6)" opacity=".34"/>
+        </svg>
+        <figcaption class="cap">Study 01 · Diogo's box — flattened, open, mid-collapse</figcaption>
+      </figure>
+
+      <figure class="plate">
+        <span class="hand h2">stillness</span>
+        <svg viewBox="0 0 200 200" role="img" aria-label="Charcoal study of a wooden chair">
+          <defs><filter id="ch2" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="3" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="6"/>
+          </filter></defs>
+          <g id="chairs" fill="none" stroke="#241f1a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#ch2)">
+            <path d="M70,162 L73,54"/><path d="M88,160 L91,54"/>
+            <path d="M66,55 Q80,47 95,55"/><path d="M68,80 Q80,74 93,80"/>
+            <path d="M55,120 L120,120 L150,140 L85,140 Z"/>
+            <path d="M85,140 L85,150"/><path d="M150,140 L150,150"/><path d="M85,150 L150,150"/>
+            <path d="M93,142 L98,200"/><path d="M150,150 L156,204"/>
+            <path d="M72,122 L70,200"/><path d="M120,122 L123,200"/>
+            <path d="M72,182 L150,184" opacity=".55"/>
+          </g>
+          <use href="#chairs" transform="translate(2.4,2.6)" opacity=".34"/>
+        </svg>
+        <figcaption class="cap">Study 02 · Isabela's chair — upright, waiting, centred</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- C · MACRO MATERIAL PLATES -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">C · Macro material plates</span>
+    <h2>Get close enough to feel friction.</h2>
+    <p class="lede">Full-bleed macro photographs of the real objects, lit by one raking source so every fibre, crease, and scuff throws a shadow. These are shot-direction plates — what to capture, and how.</p>
+
+    <div class="macros">
+      <figure class="macro"><span class="tape" aria-hidden="true"></span><div class="img m-edge"></div><figcaption><span class="t">Macro 01 · cardboard edge</span><span class="d">Crushed corrugation at a cut edge — raking light across the flutes. Shows weight borne and given way.</span></figcaption></figure>
+      <figure class="macro"><span class="tape" aria-hidden="true"></span><div class="img m-tape"></div><figcaption><span class="t">Macro 02 · packing tape</span><span class="d">A half-peeled strip, adhesive stringing. Friction of the pull caught mid-motion.</span></figcaption></figure>
+      <figure class="macro"><span class="tape" aria-hidden="true"></span><div class="img m-crease"></div><figcaption><span class="t">Macro 03 · fold &amp; crease</span><span class="d">A sharp fold line, soft highlight one side, deep shadow the other. The box's memory of being closed.</span></figcaption></figure>
+      <figure class="macro"><span class="tape" aria-hidden="true"></span><div class="img m-grain"></div><figcaption><span class="t">Macro 04 · wood grain</span><span class="d">The chair seat, grain running with the light. Warmth and age in the surface.</span></figcaption></figure>
+      <figure class="macro"><span class="tape" aria-hidden="true"></span><div class="img m-joint"></div><figcaption><span class="t">Macro 05 · joint &amp; screw</span><span class="d">Where leg meets seat — a darkened joint, one worn screw. The load-bearing detail.</span></figcaption></figure>
+      <figure class="macro"><span class="tape" aria-hidden="true"></span><div class="img m-scuff"></div><figcaption><span class="t">Macro 06 · scuff &amp; wear</span><span class="d">Scuffed paint and bruised wood — the marks of being used, moved, sat in.</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- D · LIGHT & SHADOW -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">D · Light &amp; shadow</span>
+    <h2>One hard source, long cast shadow.</h2>
+    <p class="lede">The objects live in a darkened house. A single raking spotlight carves them out and throws a long shadow across the floor — high contrast, theatrical, never evenly lit.</p>
+    <div class="shadows">
+      <div class="shadowcard">
+        <span class="lbl">Raking spotlight · the box</span>
+        <div class="cast" aria-hidden="true"></div>
+        <div class="obj"><div class="boxsil"></div></div>
+      </div>
+      <div class="shadowcard">
+        <span class="lbl">Single source · the chair</span>
+        <div class="cast" aria-hidden="true" style="width:150px;left:48%;"></div>
+        <div class="obj" style="transform:translateX(-50%);">
+          <svg width="80" height="130" viewBox="0 0 80 130" aria-hidden="true">
+            <g fill="#2a2018" stroke="#3a2e22" stroke-width="1">
+              <rect x="20" y="6" width="7" height="64"/><rect x="46" y="6" width="7" height="64"/>
+              <rect x="18" y="8" width="37" height="6"/><rect x="18" y="30" width="37" height="5"/>
+              <rect x="14" y="68" width="50" height="9"/>
+              <rect x="20" y="77" width="6" height="50"/><rect x="48" y="77" width="6" height="50"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- E · PALETTE -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">E · Organic palette</span>
+    <h2>Charcoal, paper, kraft, wood.</h2>
+    <p class="lede">An earthy, analog palette — drawing materials and the two objects, on the dark stage. No screen-bright colour anywhere.</p>
+    <div class="swatches">
+      <div class="sw" style="background:#211D19;"><span class="nm">Charcoal</span><span class="hx">#211D19</span></div>
+      <div class="sw" style="background:#4A443D;"><span class="nm">Graphite</span><span class="hx">#4A443D</span></div>
+      <div class="sw" style="background:#1A1510;"><span class="nm">Stage Linen</span><span class="hx">#1A1510</span></div>
+      <div class="sw" style="background:#E7DFCE;color:#211D19;"><span class="nm">Newsprint</span><span class="hx">#E7DFCE</span></div>
+      <div class="sw" style="background:#C4885A;color:#211D19;"><span class="nm">Kraft</span><span class="hx">#C4885A</span></div>
+      <div class="sw" style="background:#7A5230;color:#ECE4D6;"><span class="nm">Wood</span><span class="hx">#7A5230</span></div>
+      <div class="sw" style="background:#A8BAB8;color:#211D19;"><span class="nm">Breath</span><span class="hx">#A8BAB8</span></div>
+      <div class="sw" style="background:#ECE4D6;color:#211D19;"><span class="nm">Bone</span><span class="hx">#ECE4D6</span></div>
+    </div>
+    <p class="palnote"><b>Kraft</b> is Diogo's box; <b>Wood</b> is Isabela's chair; <b>Charcoal</b> and <b>Graphite</b> are the drawing hand; <b>Newsprint</b> is the sketchbook page; <b>Breath</b> is the one cool note, reserved for Isabela. Everything sits on <b>Stage Linen</b>, lit by <b>Bone</b>.</p>
+  </div>
+</section>
+
+<!-- F · TYPOGRAPHY -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">F · Typography</span>
+    <h2>Extreme legibility, an editorial-notebook voice.</h2>
+    <p class="lede">The pairing has to do two things at once: read effortlessly for every visitor, and feel like an artist's working notebook. Four faces, each with one job.</p>
+
+    <div class="type-wrap">
+      <div class="type-card specimen">
+        <div class="type-label">The voices, together</div>
+        <p class="ed">A body that <em>reveals</em> itself</p>
+        <p class="annot">— she barely moves, and it's everything</p>
+        <p class="body">Running text is set in Atkinson Hyperlegible, drawn by the Braille Institute for low-vision readers: open shapes, unmistakable letters, nothing ambiguous. It carries every word a visitor actually needs to read.</p>
+        <p class="cap">macro_03_fold_crease.tif · f/8 · raking key</p>
+      </div>
+
+      <div class="type-card">
+        <div class="type-label">The pairing</div>
+        <ul class="pairing">
+          <li><span class="role">Editorial display</span><span class="face"><b>Fraunces</b> <span>— a high-contrast, slightly wonky serif. Headlines, pull-quotes, the literary voice.</span></span></li>
+          <li><span class="role">Accessible body</span><span class="face"><b>Atkinson Hyperlegible</b> <span>— all running text. Extreme legibility is the baseline, not an add-on.</span></span></li>
+          <li><span class="role">Notebook annotation</span><span class="face"><b>Caveat</b> <span>— a handwritten margin hand for notes, arrows, and the sketchbook feel.</span></span></li>
+          <li><span class="role">Technical caption</span><span class="face"><b>IBM Plex Mono</b> <span>— typewriter labels: shot notes, file codes, timecodes.</span></span></li>
+        </ul>
+        <p class="a11y-note"><b>The rule that keeps it accessible:</b> the handwritten face is decorative only — never navigation, never essential content. Anything a visitor must read is set in Atkinson Hyperlegible.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- G · LAYOUT DESCRIPTION -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">G · How the pages compose</span>
+    <h2>Sketchbook plates pinned to a dark stage.</h2>
+    <p class="lede">The layout logic, so every page feels like the same hand assembled it.</p>
+    <div class="layout">
+      <div class="lcard"><span class="n">01</span><h3>The stage is the page</h3><p>A deep, grained linen-charcoal field with generous negative space. Content arrives in pools of light; the dark between is left to breathe.</p></div>
+      <div class="lcard"><span class="n">02</span><h3>Plates, slightly askew</h3><p>Charcoal studies and material photos sit on newsprint cards, faintly rotated, with tape and soft shadow — placed by hand, never grid-snapped.</p></div>
+      <div class="lcard"><span class="n">03</span><h3>Macro as the chapter opener</h3><p>Each chapter opens full-bleed on one macro photograph — fibre, grain, or crease — before any text. Material first, words second.</p></div>
+      <div class="lcard"><span class="n">04</span><h3>Charcoal as the divider</h3><p>A loose object study marks each section break, drawn not rendered, so the seams of the site show the hand.</p></div>
+      <div class="lcard"><span class="n">05</span><h3>Annotations in the margin</h3><p>Handwritten notes and arrows live in the margins — the artist thinking aloud — while the column stays clean and readable.</p></div>
+      <div class="lcard"><span class="n">06</span><h3>One light, long shadow</h3><p>Emphasis comes from a single raking source and a long cast shadow, not from colour or glow. Contrast does the work.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- H · TITLES -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">H · Working title directions</span>
+    <h2>Three names to test.</h2>
+    <div class="titles">
+      <div class="title-opt"><span class="t">Sibela <em>&amp;</em> Digoo</span><span class="badge">Recommended</span><span class="note">The dancers' own names for their solos — puts them first, needs no translation.</span></div>
+      <div class="title-opt"><span class="t"><em>What the Body Leaves</em></span><span class="badge">Poetic</span><span class="note">Foregrounds the objects left on stage: the boxes and the chair.</span></div>
+      <div class="title-opt"><span class="t"><em>The Body That Reveals Itself</em></span><span class="badge">From the source</span><span class="note">Lifted from Carvalho's own text on her work.</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span class="mono">SIBELA &amp; DIGOO · WEB DOC · DELIVERABLE 2 / 5 — MOOD BOARD (ART DIRECTION)</span>
+    <span class="mono">ITI / LARSyS · Dançando com a Diferença</span>
+  </div>
+</footer>
+
+</body>
+</html>

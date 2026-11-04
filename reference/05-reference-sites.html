@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Doc · Deliverable 5 — Reference Sites</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1510;--stage-wash:#241D16;--stage-deep:#100C09;--penumbra:#241D16;--penumbra-2:#2C241B;
+    --bone:#ECE4D6;--ash:#9D9389;--ash-dim:#6E655E;
+    --kraft:#C4885A;--kraft-deep:#8C5E38;--breath:#A8BAB8;--breath-deep:#6E8482;
+    --line:rgba(236,228,214,0.13);--line-strong:rgba(236,228,214,0.26);
+    --serif:'Fraunces',Georgia,serif;--sans:'Atkinson Hyperlegible',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;
+    --maxw:1140px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;color:var(--bone);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    background-color:var(--ink);
+    background-image:
+      radial-gradient(125% 90% at 50% -12%, rgba(236,228,214,0.06), transparent 60%),
+      radial-gradient(70% 55% at 16% 28%, rgba(168,186,184,0.05), transparent 62%),
+      radial-gradient(72% 58% at 86% 72%, rgba(196,136,90,0.06), transparent 62%),
+      linear-gradient(176deg, var(--stage-wash) 0%, var(--ink) 42%, var(--stage-deep) 100%);
+    background-attachment:fixed;position:relative;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;
+    opacity:.055;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size:220px 220px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .mono{font-family:var(--mono);}
+  ::selection{background:var(--kraft);color:var(--ink);}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);}
+
+  header{position:relative;padding:74px 0 40px;overflow:hidden;border-bottom:1px solid var(--line);}
+  .spot{position:absolute;inset:0;z-index:0;background:radial-gradient(80% 70% at 50% -20%,rgba(236,228,214,.10),transparent 55%),radial-gradient(50% 60% at 80% 50%,rgba(196,136,90,.10),transparent 60%);pointer-events:none;}
+  header .wrap{position:relative;z-index:1;}
+  .delv{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--kraft);border:1px solid var(--kraft-deep);border-radius:99px;padding:5px 13px;margin-bottom:26px;}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(2.6rem,7vw,5rem);line-height:.98;letter-spacing:-.02em;margin:0 0 14px;}
+  h1 em{font-style:italic;}
+  .sub{font-size:1.2rem;color:var(--ash);max-width:64ch;margin:0;}
+  .sub b{color:var(--bone);font-weight:700;}
+
+  section{padding:58px 0;border-bottom:1px solid var(--line);}
+  h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.7rem,3.6vw,2.4rem);line-height:1.05;margin:0 0 8px;letter-spacing:-.01em;}
+  .lede{font-size:1.1rem;color:var(--ash);max-width:66ch;margin:0 0 8px;}
+
+  .refs{margin-top:38px;display:flex;flex-direction:column;gap:20px;}
+  .ref{
+    border:1px solid var(--line);border-radius:6px;overflow:hidden;
+    background:linear-gradient(180deg,rgba(255,255,255,.018),transparent);
+    display:grid;grid-template-columns:200px 1fr;
+  }
+  .ref .side{
+    border-right:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:6px;
+    background:rgba(255,255,255,.012);
+  }
+  .ref .idx{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--kraft);}
+  .ref.added .idx{color:var(--breath);}
+  .ref .nm{font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1.05;letter-spacing:-.01em;margin:4px 0 2px;}
+  .ref .by{font-family:var(--mono);font-size:10.5px;color:var(--ash);letter-spacing:.04em;line-height:1.6;}
+  .ref .url{font-family:var(--mono);font-size:10.5px;color:var(--ash-dim);letter-spacing:.02em;margin-top:auto;word-break:break-all;}
+  .ref .url a{color:var(--breath);text-decoration:none;}
+  .ref .url a:hover,.ref .url a:focus-visible{text-decoration:underline;}
+  .ref .main{padding:24px 26px;}
+  .ref .what{font-size:.97rem;color:var(--ash);margin:0 0 18px;}
+  .ref .what b{color:var(--bone);font-weight:700;}
+  .ref .borrow{border-top:1px solid var(--line);padding-top:15px;}
+  .ref .borrow .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--kraft);display:block;margin-bottom:6px;}
+  .ref.added .borrow .lbl{color:var(--breath);}
+  .ref .borrow p{margin:0;font-size:.97rem;}
+  .ref .borrow b{color:var(--bone);font-weight:700;}
+  .tag-added{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--breath);border:1px solid var(--breath-deep);border-radius:99px;padding:2px 8px;width:max-content;}
+
+  /* synthesis */
+  .synth{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:38px;}
+  .scard{border:1px solid var(--line);border-radius:4px;padding:22px;}
+  .scard .n{font-family:var(--mono);font-size:11px;color:var(--kraft);letter-spacing:.12em;}
+  .scard h3{font-family:var(--serif);font-weight:400;font-size:1.2rem;margin:8px 0 5px;}
+  .scard p{margin:0;font-size:.92rem;color:var(--ash);}
+
+  footer{padding:40px 0 60px;}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:baseline;}
+  .foot-row .mono{font-size:11px;color:var(--ash-dim);letter-spacing:.1em;}
+
+  @media(max-width:860px){
+    body{font-size:16px;}
+    .ref{grid-template-columns:1fr;}
+    .ref .side{border-right:none;border-bottom:1px solid var(--line);}
+    .ref .url{margin-top:10px;}
+    .synth{grid-template-columns:1fr;}
+  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{transition:none!important;}}
+  :focus-visible{outline:2px solid var(--kraft);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<nav aria-label="Package navigation" style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 28px;border-bottom:1px solid var(--line);background:var(--penumbra-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;flex-wrap:wrap;">
+  <a href="index.html" style="color:var(--kraft);text-decoration:none;white-space:nowrap;">↤ All deliverables</a>
+  <span style="color:var(--ash);">PLANNING DOCUMENT 5 OF 5 <span style="color:var(--ash-dim);">(not the web doc's navigation)</span></span>
+  <span><a href="04-gather-the-content.html" style="color:var(--kraft);text-decoration:none;white-space:nowrap;">↤ Prev</a></span>
+</nav>
+
+<header>
+  <div class="spot" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="delv">Deliverable 5 / 5 · Reference Sites</span>
+    <h1>Four projects that already<br>solved <em>these</em> problems.</h1>
+    <p class="sub">Three you named, plus one I'm adding because it is the closest precedent for turning <b>movement qualities</b> into something a visitor can read. Each card states what the project is, why it fits this web doc, and the one mechanic worth taking.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">The references</span>
+    <h2>What to study, and what to take from each.</h2>
+
+    <div class="refs">
+
+      <!-- 1 -->
+      <article class="ref">
+        <div class="side">
+          <span class="idx">REF 01</span>
+          <span class="nm">One Shared House</span>
+          <span class="by">Anton &amp; Irene<br>2016 · self-funded</span>
+          <span class="url"><a href="https://onesharedhouse.com" target="_blank" rel="noopener">onesharedhouse.com</a></span>
+        </div>
+        <div class="main">
+          <p class="what">A ten-minute film about a communal house in Amsterdam. <b>Optional interactive panels sit at the foot of the screen</b> — visitors who want more depth open them without losing their place; visitors who just want to watch, watch. It closes with a survey whose results aggregate from viewers around the world.</p>
+          <div class="borrow">
+            <span class="lbl">Take for this project</span>
+            <p>A calm linear spine with <b>opt-in depth</b>, plus an end mechanic where the audience leaves a trace — which feeds straight into the collective “Final Map” of audience box-compositions in the Post-Dance section.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2 -->
+      <article class="ref">
+        <div class="side">
+          <span class="idx">REF 02</span>
+          <span class="nm">Welcome to Pine Point</span>
+          <span class="by">The Goggles<br>NFB Canada · 2011<br><span style="color:var(--ash-dim)">Flash-era archive</span></span>
+          <span class="url"><a href="https://pinepoint.nfb.ca" target="_blank" rel="noopener">pinepoint.nfb.ca</a></span>
+        </div>
+        <div class="main">
+          <p class="what">A vanished mining town told as a scrapbook. You <b>drag and rearrange ephemera as if it were your own archive</b>; a chaptered spine with always-visible navigation keeps you oriented; sound runs through every page. Every element is custom — nothing reads as a default web template.</p>
+          <div class="borrow">
+            <span class="lbl">Take for this project</span>
+            <p><b>Objects as navigation.</b> Diogo's boxes are the literal version — draggable, stackable elements that move the visitor through the Post-Dance section. Plus the persistent chapter menu that keeps everyone found.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3 -->
+      <article class="ref">
+        <div class="side">
+          <span class="idx">REF 03</span>
+          <span class="nm">Hollow</span>
+          <span class="by">Elaine McMillion Sheldon<br>2013 · Peabody winner</span>
+          <span class="url"><a href="http://hollowdocumentary.com" target="_blank" rel="noopener">hollowdocumentary.com</a></span>
+        </div>
+        <div class="main">
+          <p class="what">A participatory portrait of McDowell County, West Virginia, where <b>residents recorded their own video portraits</b> rather than being filmed about. The place is built from many first-person voices stitched into a scrollable map of a community.</p>
+          <div class="borrow">
+            <span class="lbl">Take for this project</span>
+            <p>The participatory ethic — <b>subjects speak for themselves.</b> This is the model for handing narration to Isabela and Diogo instead of explaining them over b-roll. It is the spine of your whole brief: move the camera off the choreographer.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4 added -->
+      <article class="ref added">
+        <div class="side">
+          <span class="tag-added">+ Added by me</span>
+          <span class="idx">REF 04</span>
+          <span class="nm">Synchronous Objects</span>
+          <span class="by">W. Forsythe + Ohio State<br>2009</span>
+          <span class="url"><a href="https://synchronousobjects.osu.edu" target="_blank" rel="noopener">synchronousobjects.osu.edu</a></span>
+        </div>
+        <div class="main">
+          <p class="what">An online companion to the dance <em>One Flat Thing, reproduced</em> that <b>translates choreographic structure into interactive visual scores</b> — cueing, alignment, and movement patterns you can read as data. The closest precedent for representing how a body moves, not just that it moved.</p>
+          <div class="borrow">
+            <span class="lbl">Take for this project</span>
+            <p>The grammar for the timeline's <b>movement-quality lanes</b> — Isabela's breath and suspension, Diogo's weight and instability — drawn as readable visual tracks, never as motion-capture spectacle. It keeps the technology invisible, the way Tânia Carvalho asks.</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- SYNTHESIS -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">What they share</span>
+    <h2>Four lessons, one direction.</h2>
+    <p class="lede">Read together, the references point the same way — and it matches the brief.</p>
+
+    <div class="synth">
+      <div class="scard"><span class="n">01</span><h3>One spine, opt-in depth</h3><p>All keep a clear path through, with extra layers a visitor chooses — never a maze. (One Shared House · Pine Point)</p></div>
+      <div class="scard"><span class="n">02</span><h3>Let the subjects speak</h3><p>The strongest ones hand the microphone to the people in the story. (Hollow)</p></div>
+      <div class="scard"><span class="n">03</span><h3>Objects carry meaning</h3><p>Physical things — ephemera, a body's structure — become the interface, not decoration. (Pine Point · Synchronous Objects)</p></div>
+      <div class="scard"><span class="n">04</span><h3>Custom, quiet, sound-led</h3><p>None look like a template. Sound and restraint do the work — exactly Carvalho's aesthetic.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span class="mono">SIBELA &amp; DIGOO · WEB DOC · DELIVERABLE 5 / 5 — REFERENCE SITES</span>
+    <span class="mono">ITI / LARSyS · Dançando com a Diferença</span>
+  </div>
+</footer>
+
+</body>
+</html>
